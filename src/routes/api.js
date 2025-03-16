@@ -15,6 +15,8 @@ import {
   getSingleDepartment,
   updateSingleDepartment,
 } from "../controllers/departmentController.js";
+import { createEmployee } from "../controllers/employeeController.js";
+import { createRole } from "../controllers/roleController.js";
 
 const router = express.Router();
 
@@ -32,5 +34,11 @@ router.get("/get-all-department", getAllDepartment);
 router.get("/get-single-department/:id", getSingleDepartment);
 router.get("/delete-single-department/:id", deleteSingleDepartment);
 router.get("/update-single-department/:id", updateSingleDepartment);
+
+// role routes
+router.post("/create-role", createRole);
+
+// employee routes
+router.post("/create-employee", createEmployee);
 
 export default router;
