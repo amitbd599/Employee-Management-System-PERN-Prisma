@@ -76,3 +76,27 @@ export const deleteSingleDepartment = async (req, res) => {
       .json({ message: "Something went wrong!", error: error.toString() });
   }
 };
+
+//! update Single Department
+export const updateSingleDepartment = async (req, res) => {
+  try {
+    let { name } = req.body;
+    const department = await prisma.department.update({
+      where: {
+        id: req.params.id,
+      },
+
+      data: {
+        name,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ message: "Department update successfully.", department });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong!", error: error.toString() });
+  }
+};

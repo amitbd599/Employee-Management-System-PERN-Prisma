@@ -13,6 +13,7 @@ import {
   deleteSingleDepartment,
   getAllDepartment,
   getSingleDepartment,
+  updateSingleDepartment,
 } from "../controllers/departmentController.js";
 
 const router = express.Router();
@@ -30,5 +31,6 @@ router.post("/create-department", createDepartment);
 router.get("/get-all-department", getAllDepartment);
 router.get("/get-single-department/:id", getSingleDepartment);
 router.get("/delete-single-department/:id", deleteSingleDepartment);
+router.get("/update-single-department/:id", updateSingleDepartment);
 
 export default router;
