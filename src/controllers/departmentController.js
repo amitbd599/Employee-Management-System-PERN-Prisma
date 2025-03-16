@@ -30,20 +30,12 @@ export const createDepartment = async (req, res) => {
   }
 };
 
-//! get All User
-export const getAllUser = async (req, res) => {
+//! get All Department
+export const getAllDepartment = async (req, res) => {
   try {
-    const allUsers = await prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      },
-    });
+    const allDepartment = await prisma.department.findMany({});
 
-    res.status(200).json({ allUsers });
+    res.status(200).json({ allDepartment });
   } catch (error) {
     res
       .status(500)
@@ -51,23 +43,16 @@ export const getAllUser = async (req, res) => {
   }
 };
 
-//! get Single User
-export const getSingleUser = async (req, res) => {
+//! get Single Department
+export const getSingleDepartment = async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
+    const department = await prisma.department.findUnique({
       where: {
         id: req.params.id,
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      },
     });
 
-    res.status(200).json({ user });
+    res.status(200).json({ department });
   } catch (error) {
     res
       .status(500)

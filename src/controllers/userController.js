@@ -115,3 +115,28 @@ export const deleteSingleUser = async (req, res) => {
       .json({ message: "Something went wrong!", error: error.toString() });
   }
 };
+
+//! update Single User
+export const updateSingleUser = async (req, res) => {
+  try {
+    let { name, email, password, role } = req.body;
+    const user = await prisma.user.update({
+      where: {
+        id: req.params.id,
+      },
+
+      data: {
+        name,
+        email,
+        password,
+        role,
+      },
+    });
+
+    res.status(200).json({ message: "User update successfully.", user });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong!", error: error.toString() });
+  }
+};
