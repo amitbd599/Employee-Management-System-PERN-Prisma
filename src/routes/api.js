@@ -10,6 +10,7 @@ import {
 } from "../controllers/userController.js";
 import {
   createDepartment,
+  deleteSingleDepartment,
   getAllDepartment,
   getSingleDepartment,
 } from "../controllers/departmentController.js";
@@ -28,5 +29,6 @@ router.put("/update-single-user/:id", updateSingleUser);
 router.post("/create-department", createDepartment);
 router.get("/get-all-department", getAllDepartment);
 router.get("/get-single-department/:id", getSingleDepartment);
+router.get("/delete-single-department/:id", deleteSingleDepartment);
 
 export default router;

@@ -60,40 +60,16 @@ export const getSingleDepartment = async (req, res) => {
   }
 };
 
-//! get User by role
-export const getUserByRole = async (req, res) => {
+//! delete Single Department
+export const deleteSingleDepartment = async (req, res) => {
   try {
-    const user = await prisma.user.findMany({
-      where: {
-        role: req.params.role,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      },
-    });
-
-    res.status(200).json({ user });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
-  }
-};
-
-//! delete Single User
-export const deleteSingleUser = async (req, res) => {
-  try {
-    const user = await prisma.user.delete({
+    const department = await prisma.department.delete({
       where: {
         id: req.params.id,
       },
     });
 
-    res.status(200).json({ message: "User delete successfully." });
+    res.status(200).json({ message: "Department delete successfully." });
   } catch (error) {
     res
       .status(500)
