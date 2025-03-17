@@ -91,6 +91,30 @@ export const deleteSingleDepartment = async (req, res) => {
 export const updateSingleDepartment = async (req, res) => {
   try {
     let { name } = req.body;
+
+    // step 1:
+    const isDepartmentId = await prisma.department.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isDepartmentId === false) {
+      return res.status(200).json({ message: "Department not exists." });
+    }
+
+    // step 2: check if department name already exists
+    const isDepartment = await prisma.department.findUnique({
+      where: {
+        name,
+      },
+    });
+
+    if (!!isDepartment === true) {
+      return res.status(409).json({ message: "Department already exists." });
+    }
+
+    // step 3: update department
     const department = await prisma.department.update({
       where: {
         id: req.params.id,

@@ -142,7 +142,7 @@ export const updateSingleUser = async (req, res) => {
       return res.status(200).json({ message: "User not exists." });
     }
 
-    // step 2 update user
+    // step 2: update user
     const user = await prisma.user.update({
       where: {
         id: req.params.id,
