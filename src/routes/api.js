@@ -18,6 +18,7 @@ import {
 } from "../controllers/departmentController.js";
 import {
   createEmployee,
+  deleteSingleEmployee,
   getAllEmployee,
   getSingleEmployee,
 } from "../controllers/employeeController.js";
@@ -45,19 +46,20 @@ router.put("/update-single-user/:id", updateSingleUser);
 router.post("/create-department", createDepartment);
 router.get("/get-all-department", getAllDepartment);
 router.get("/get-single-department/:id", getSingleDepartment);
-router.get("/delete-single-department/:id", deleteSingleDepartment);
+router.delete("/delete-single-department/:id", deleteSingleDepartment);
 router.put("/update-single-department/:id", updateSingleDepartment);
 
 // role routes
 router.post("/create-role", createRole);
 router.get("/get-all-role", getAllRole);
 router.get("/get-single-role/:id", getSingleRole);
-router.get("/delete-single-role/:id", deleteSingleRole);
+router.delete("/delete-single-role/:id", deleteSingleRole);
 router.put("/update-single-role/:id", updateRoleDepartment);
 
 // employee routes
 router.post("/create-employee", createEmployee);
 router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
 router.get("/get-single-employee/:id", getSingleEmployee);
+router.delete("/delete-single-employee/:id", deleteSingleEmployee);
 
 export default router;

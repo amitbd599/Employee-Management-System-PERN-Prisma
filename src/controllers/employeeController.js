@@ -104,26 +104,26 @@ export const getSingleEmployee = async (req, res) => {
   }
 };
 
-//! delete Single Role
-export const deleteSingleRole = async (req, res) => {
+//! delete Single Employee
+export const deleteSingleEmployee = async (req, res) => {
   try {
-    const isRole = await prisma.role.findUnique({
+    const isEmployee = await prisma.employee.findUnique({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!!isRole === false) {
-      return res.status(200).json({ message: "Role not exists." });
+    if (!!isEmployee === false) {
+      return res.status(200).json({ message: "Employee not exists." });
     }
 
-    await prisma.role.delete({
+    await prisma.employee.delete({
       where: {
         id: req.params.id,
       },
     });
 
-    res.status(200).json({ message: "Role delete successfully." });
+    res.status(200).json({ message: "Employee delete successfully." });
   } catch (error) {
     res
       .status(500)
