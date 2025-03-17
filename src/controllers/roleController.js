@@ -41,16 +41,16 @@ export const getAllRole = async (req, res) => {
   }
 };
 
-//! get Single Department
-export const getSingleDepartment = async (req, res) => {
+//! get Single Role
+export const getSingleRole = async (req, res) => {
   try {
-    const department = await prisma.department.findUnique({
+    const role = await prisma.role.findUnique({
       where: {
         id: req.params.id,
       },
     });
 
-    res.status(200).json({ department });
+    res.status(200).json({ role });
   } catch (error) {
     res
       .status(500)

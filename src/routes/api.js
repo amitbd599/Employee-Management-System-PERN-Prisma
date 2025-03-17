@@ -16,7 +16,11 @@ import {
   updateSingleDepartment,
 } from "../controllers/departmentController.js";
 import { createEmployee } from "../controllers/employeeController.js";
-import { createRole, getAllRole } from "../controllers/roleController.js";
+import {
+  createRole,
+  getAllRole,
+  getSingleRole,
+} from "../controllers/roleController.js";
 
 const router = express.Router();
 
@@ -38,6 +42,7 @@ router.get("/update-single-department/:id", updateSingleDepartment);
 // role routes
 router.post("/create-role", createRole);
 router.get("/get-all-role", getAllRole);
+router.get("/get-single-role/:id", getSingleRole);
 
 // employee routes
 router.post("/create-employee", createEmployee);
