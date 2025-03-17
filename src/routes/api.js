@@ -21,6 +21,7 @@ import {
   deleteSingleEmployee,
   getAllEmployee,
   getSingleEmployee,
+  updateRoleEmployee,
 } from "../controllers/employeeController.js";
 import {
   createRole,
@@ -61,5 +62,6 @@ router.post("/create-employee", createEmployee);
 router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
 router.get("/get-single-employee/:id", getSingleEmployee);
 router.delete("/delete-single-employee/:id", deleteSingleEmployee);
+router.put("/update-single-employee/:id", updateRoleEmployee);
 
 export default router;

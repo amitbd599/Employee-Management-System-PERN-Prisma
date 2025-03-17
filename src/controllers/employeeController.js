@@ -131,45 +131,52 @@ export const deleteSingleEmployee = async (req, res) => {
   }
 };
 
-//! update Single Role
-export const updateRoleDepartment = async (req, res) => {
+//! update Single Employee
+export const updateRoleEmployee = async (req, res) => {
   try {
-    let { name } = req.body;
+    let { firstName, lastName, email, phone, salary, departmentId, roleId } =
+      req.body;
 
-    // step 1 - check role id exists
-    const isRoleId = await prisma.role.findUnique({
+    // step 1 - check employee id exists
+    const isEmployeeId = await prisma.employee.findUnique({
       where: {
         id: req.params.id,
       },
     });
 
-    if (!!isRoleId === false) {
-      return res.status(200).json({ message: "Role not found." });
+    if (!!isEmployeeId === false) {
+      return res.status(200).json({ message: "Employee not found." });
     }
 
-    // step 2 - check if role name exists
-    const isRole = await prisma.role.findUnique({
+    // step 2 - check if employee name exists
+    const isEmployee = await prisma.employee.findUnique({
       where: {
-        name,
+        email,
       },
     });
 
-    if (!!isRole === true) {
-      return res.status(409).json({ message: "Role already exists" });
+    if (!!isEmployee === true) {
+      return res.status(409).json({ message: "Employee already exists" });
     }
 
     // step 3 - update role
-    const role = await prisma.role.update({
+    const role = await prisma.employee.update({
       where: {
         id: req.params.id,
       },
 
       data: {
-        name,
+        firstName,
+        lastName,
+        email,
+        phone,
+        salary,
+        departmentId,
+        roleId,
       },
     });
 
-    res.status(200).json({ message: "Role update successfully.", role });
+    res.status(200).json({ message: "Employee update successfully.", role });
   } catch (error) {
     res
       .status(500)
