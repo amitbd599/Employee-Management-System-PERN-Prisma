@@ -31,6 +31,8 @@ import {
   updateRoleDepartment,
 } from "../controllers/roleController.js";
 import { AuthVerification } from "../middlewares/AuthVerification.js";
+import { uploadFile } from "../middlewares/FileUploads.js";
+import { fileUpload } from "../controllers/fileUploadController.js";
 
 const router = express.Router();
 
@@ -63,5 +65,13 @@ router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
 router.get("/get-single-employee/:id", getSingleEmployee);
 router.delete("/delete-single-employee/:id", deleteSingleEmployee);
 router.put("/update-single-employee/:id", updateRoleEmployee);
+
+// file routes
+router.post(
+  "/file-upload",
+  AuthVerification,
+  uploadFile.single("file"),
+  fileUpload
+);
 
 export default router;

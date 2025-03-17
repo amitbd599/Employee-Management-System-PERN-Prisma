@@ -1,4 +1,4 @@
-const multer = require("multer");
+import multer from "multer";
 
 // Configure storage engine
 const fileStorageEngine = multer.diskStorage({
@@ -12,12 +12,10 @@ const fileStorageEngine = multer.diskStorage({
 });
 
 // Set file size limits and file filter
-let uploadFile = multer({
+export const uploadFile = multer({
   storage: fileStorageEngine,
-  limits: { fileSize: 100 * 1024 },
+  limits: { fileSize: 1000 * 1024 },
   fileFilter: (req, file, cb) => {
     cb(null, true);
   },
 });
-
-module.exports = uploadFile;
