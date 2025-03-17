@@ -129,7 +129,20 @@ export const deleteSingleUser = async (req, res) => {
 //! update Single User
 export const updateSingleUser = async (req, res) => {
   try {
-    let { name, email, password, role } = req.body;
+    let { name, password, role } = req.body;
+
+    // step 1: check if user id exists
+    const isUserId = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isUserId === false) {
+      return res.status(200).json({ message: "User not exists." });
+    }
+
+    // step 2 update user
     const user = await prisma.user.update({
       where: {
         id: req.params.id,
@@ -137,7 +150,6 @@ export const updateSingleUser = async (req, res) => {
 
       data: {
         name,
-        email,
         password,
         role,
       },
