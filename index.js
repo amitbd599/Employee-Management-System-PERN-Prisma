@@ -1,13 +1,25 @@
+import routes from "./src/routes/api.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import routes from "./src/routes/api.js";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import xss from "xss-clean";
+import hpp from "hpp";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+app.use(xss());
+app.use(hpp());
+app.use(helmet());
+
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 3000 });
+app.use(limiter);
 
 app.use("/api", routes);
 

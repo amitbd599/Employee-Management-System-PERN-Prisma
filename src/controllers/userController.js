@@ -1,4 +1,5 @@
 import prisma from "../../config/db.js";
+import { EncodeToken } from "../utility/TokenHelper.js";
 
 //! create User
 export const createUser = async (req, res) => {
@@ -27,6 +28,52 @@ export const createUser = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error creating employee", error: error.toString() });
+  }
+};
+
+//! user login
+
+export const loginUser = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+        password,
+      },
+    });
+
+    if (!!user === false) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (!!user === true) {
+      let token = EncodeToken(user.email, user.id);
+
+      let options = {
+        maxAge: process.env.Cookie_Expire_Time,
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      };
+
+      // Set cookie
+      res.cookie("Token", token, options);
+      res.status(200).json({
+        message: "Login successful",
+        user: {
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
+        token: token,
+      });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error logging in", error: error.toString() });
   }
 };
 

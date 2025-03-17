@@ -6,6 +6,7 @@ import {
   getAllUser,
   getSingleUser,
   getUserByRole,
+  loginUser,
   updateSingleUser,
 } from "../controllers/userController.js";
 import {
@@ -15,7 +16,10 @@ import {
   getSingleDepartment,
   updateSingleDepartment,
 } from "../controllers/departmentController.js";
-import { createEmployee } from "../controllers/employeeController.js";
+import {
+  createEmployee,
+  getAllEmployee,
+} from "../controllers/employeeController.js";
 import {
   createRole,
   deleteSingleRole,
@@ -23,11 +27,13 @@ import {
   getSingleRole,
   updateRoleDepartment,
 } from "../controllers/roleController.js";
+import { AuthVerification } from "../middlewares/AuthVerification.js";
 
 const router = express.Router();
 
 // User routes
-router.post("/create-user", createUser);
+router.post("/create-user", AuthVerification, createUser);
+router.post("/login-user", loginUser);
 router.get("/get-all-user", getAllUser);
 router.get("/get-single-user/:id", getSingleUser);
 router.get("/get-user-by-role/:role", getUserByRole);
@@ -50,5 +56,6 @@ router.put("/update-single-role/:id", updateRoleDepartment);
 
 // employee routes
 router.post("/create-employee", createEmployee);
+router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
 
 export default router;
