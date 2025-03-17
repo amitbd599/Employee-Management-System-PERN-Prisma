@@ -63,7 +63,17 @@ export const getSingleDepartment = async (req, res) => {
 //! delete Single Department
 export const deleteSingleDepartment = async (req, res) => {
   try {
-    const department = await prisma.department.delete({
+    const isDepartment = await prisma.department.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isDepartment === false) {
+      return res.status(200).json({ message: "Department not exists." });
+    }
+
+    await prisma.department.delete({
       where: {
         id: req.params.id,
       },

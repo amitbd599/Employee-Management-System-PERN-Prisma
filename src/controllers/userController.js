@@ -102,7 +102,17 @@ export const getUserByRole = async (req, res) => {
 //! delete Single User
 export const deleteSingleUser = async (req, res) => {
   try {
-    const user = await prisma.user.delete({
+    const isUser = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isUser === false) {
+      return res.status(200).json({ message: "User not exists" });
+    }
+
+    await prisma.user.delete({
       where: {
         id: req.params.id,
       },

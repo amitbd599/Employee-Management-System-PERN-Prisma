@@ -18,8 +18,10 @@ import {
 import { createEmployee } from "../controllers/employeeController.js";
 import {
   createRole,
+  deleteSingleRole,
   getAllRole,
   getSingleRole,
+  updateRoleDepartment,
 } from "../controllers/roleController.js";
 
 const router = express.Router();
@@ -37,12 +39,14 @@ router.post("/create-department", createDepartment);
 router.get("/get-all-department", getAllDepartment);
 router.get("/get-single-department/:id", getSingleDepartment);
 router.get("/delete-single-department/:id", deleteSingleDepartment);
-router.get("/update-single-department/:id", updateSingleDepartment);
+router.put("/update-single-department/:id", updateSingleDepartment);
 
 // role routes
 router.post("/create-role", createRole);
 router.get("/get-all-role", getAllRole);
 router.get("/get-single-role/:id", getSingleRole);
+router.get("/delete-single-role/:id", deleteSingleRole);
+router.put("/update-single-role/:id", updateRoleDepartment);
 
 // employee routes
 router.post("/create-employee", createEmployee);

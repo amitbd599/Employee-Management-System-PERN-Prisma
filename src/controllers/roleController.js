@@ -5,13 +5,13 @@ export const createRole = async (req, res) => {
   try {
     let { name } = req.body;
 
-    const isEmployee = await prisma.role.findUnique({
+    const isRole = await prisma.role.findUnique({
       where: {
         name,
       },
     });
 
-    if (!!isEmployee === true) {
+    if (!!isRole === true) {
       return res.status(409).json({ message: "Role already exists" });
     }
 
@@ -58,16 +58,26 @@ export const getSingleRole = async (req, res) => {
   }
 };
 
-//! delete Single Department
-export const deleteSingleDepartment = async (req, res) => {
+//! delete Single Role
+export const deleteSingleRole = async (req, res) => {
   try {
-    const department = await prisma.department.delete({
+    const isRole = await prisma.role.findUnique({
       where: {
         id: req.params.id,
       },
     });
 
-    res.status(200).json({ message: "Department delete successfully." });
+    if (!!isRole === false) {
+      return res.status(200).json({ message: "Role not exists." });
+    }
+
+    await prisma.role.delete({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).json({ message: "Role delete successfully." });
   } catch (error) {
     res
       .status(500)
@@ -75,11 +85,35 @@ export const deleteSingleDepartment = async (req, res) => {
   }
 };
 
-//! update Single Department
-export const updateSingleDepartment = async (req, res) => {
+//! update Single Role
+export const updateRoleDepartment = async (req, res) => {
   try {
     let { name } = req.body;
-    const department = await prisma.department.update({
+
+    // step 1 - check role id exists
+    const isRoleId = await prisma.role.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isRoleId === false) {
+      return res.status(200).json({ message: "Role not found." });
+    }
+
+    // step 2 - check if role name exists
+    const isRole = await prisma.role.findUnique({
+      where: {
+        name,
+      },
+    });
+
+    if (!!isRole === true) {
+      return res.status(409).json({ message: "Role already exists" });
+    }
+
+    // step 3 - update role
+    const role = await prisma.role.update({
       where: {
         id: req.params.id,
       },
@@ -89,9 +123,7 @@ export const updateSingleDepartment = async (req, res) => {
       },
     });
 
-    res
-      .status(200)
-      .json({ message: "Department update successfully.", department });
+    res.status(200).json({ message: "Role update successfully.", role });
   } catch (error) {
     res
       .status(500)
