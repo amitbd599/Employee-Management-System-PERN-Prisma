@@ -19,6 +19,7 @@ import {
 import {
   createEmployee,
   getAllEmployee,
+  getSingleEmployee,
 } from "../controllers/employeeController.js";
 import {
   createRole,
@@ -57,5 +58,6 @@ router.put("/update-single-role/:id", updateRoleDepartment);
 // employee routes
 router.post("/create-employee", createEmployee);
 router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
+router.get("/get-single-employee/:id", getSingleEmployee);
 
 export default router;

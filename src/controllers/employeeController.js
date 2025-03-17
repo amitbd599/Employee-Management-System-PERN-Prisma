@@ -68,16 +68,35 @@ export const getAllEmployee = async (req, res) => {
   }
 };
 
-//! get Single Role
-export const getSingleRole = async (req, res) => {
+//! get Single Employee
+export const getSingleEmployee = async (req, res) => {
   try {
-    const role = await prisma.role.findUnique({
+    const employee = await prisma.employee.findUnique({
       where: {
         id: req.params.id,
       },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phone: true,
+        salary: true,
+        createdAt: true,
+        department: {
+          select: {
+            name: true,
+          },
+        },
+        role: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
-    res.status(200).json({ role });
+    res.status(200).json({ employee });
   } catch (error) {
     res
       .status(500)
