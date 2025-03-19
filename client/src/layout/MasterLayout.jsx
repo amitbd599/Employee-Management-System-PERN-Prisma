@@ -12,7 +12,7 @@ const MasterLayout = ({ children }) => {
         {/* Inner body */}
         <div className='w-full'>
           <TopBar />
-          <div className='px-[40px] pt-[40px] min-h-[calc(100vh-60px)] bg-[#F0F1F7]'>
+          <div className='px-[40px] pt-[40px] min-h-[calc(100vh-60px)] bg-[#F5F6FA]'>
             {children}
           </div>
         </div>

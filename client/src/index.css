@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hidden {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@layer components {
+  .nav {
+    @apply font-medium flex justify-between items-center text-white  px-[20px] py-[10px] pl-[20px] mr-2 bg-gray-800;
+  }
+
+  .nav__item {
+    @apply font-medium rounded-s-lg text-gray-900 block border-b px-[20px] py-[10px] pl-[20px] mr-2 bg-[#E4F1FF] hover:bg-[#487FFF] hover:text-white transition-all duration-300;
+  }
+
+  .nav__item_active {
+    @apply font-medium rounded-s-lg  block border-b px-[20px] py-[10px] pl-[20px] mr-2 bg-[#487FFF] text-white transition-all duration-300;
+  }
+}
