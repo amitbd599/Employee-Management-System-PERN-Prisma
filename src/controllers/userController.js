@@ -96,13 +96,11 @@ export const getAllUser = async (req, res) => {
 
     res.status(200).json({ success: true, allUsers });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -164,7 +162,9 @@ export const deleteSingleUser = async (req, res) => {
     });
 
     if (!!isUser === false) {
-      return res.status(200).json({ message: "User not exists" });
+      return res
+        .status(200)
+        .json({ success: false, message: "User not exists" });
     }
 
     await prisma.user.delete({
@@ -173,11 +173,17 @@ export const deleteSingleUser = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "User delete successfully." });
+    res
+      .status(200)
+      .json({ success: true, message: "User delete successfully." });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 

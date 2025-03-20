@@ -29,6 +29,42 @@ const UserStore = create((set) => ({
       set({ loadingRequest: false });
     }
   },
+
+  // get-all-user
+  allUser: null,
+  getAllUsersRequest: async () => {
+    try {
+      let res = await axios.get("api/get-all-user");
+      if (res?.data?.success === true) {
+        set({ allUser: res?.data?.allUsers });
+      } else {
+        set({ allUser: null });
+        ErrorToast(res?.data?.message);
+      }
+    } catch (e) {
+      set({ allUser: null });
+      ErrorToast("Something went wrong!");
+      console.log(e);
+    }
+  },
+
+  // delete-single-user
+  deleteUserRequest: async (id) => {
+    try {
+      let res = await axios.delete(`api/delete-single-user/${id}`);
+      if (res?.data?.success === true) {
+        SuccessToast(res?.data?.message);
+        return true;
+      } else {
+        ErrorToast(res?.data?.message);
+        return false;
+      }
+    } catch (e) {
+      ErrorToast("Something went wrong!");
+      console.log(e);
+      return false;
+    }
+  },
 }));
 
 export default UserStore;

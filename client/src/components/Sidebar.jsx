@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa6";
 export function Sidebar() {
   return (
-    <section className='w-[300px] border-r border-gray-300  h-screen overflow-auto scrollbar-hidden'>
+    <section className='w-[260px] border-r border-gray-300  h-screen fixed z-50 overflow-auto scrollbar-hidden'>
       <div className=''>
         <div className='px-[10px] py-[20px] flex justify-center border-b'>
           <Link to='/'>

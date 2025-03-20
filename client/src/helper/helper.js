@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
+import moment from "moment";
 
 class FormHelper {
   IsEmpty(value) {
@@ -19,25 +20,29 @@ class FormHelper {
     });
   }
 
-  DeleteAlert(apiFun, id) {
+  formatDate(date) {
+    const formattedDate = moment(date).format("DD-MM-YYYY");
+    return formattedDate;
+  }
+
+  DeleteAlert() {
     return MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
-      // icon: "warning",
-      iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
+      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        return apiFun(id).then((result) => {
-          return result;
-        });
+        return true;
+      } else {
+        return false;
       }
     });
   }
 }
 
-export const { IsEmpty, ErrorToast, SuccessToast, DeleteAlert } =
+export const { IsEmpty, ErrorToast, SuccessToast, formatDate, DeleteAlert } =
   new FormHelper();
