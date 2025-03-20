@@ -9,6 +9,7 @@ import GetDepartmentPage from "./pages/GetDepartmentPage";
 import CreateRolePage from "./pages/CreateRolePage";
 import GetRolePage from "./pages/GetRolePage";
 import UpdateRolePage from "./pages/UpdateRolePage";
+import CreateEmployeePage from "./pages/CreateEmployeePage";
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
         <Route exact path='/create-role' element={<CreateRolePage />} />
         <Route exact path='/get-all-role' element={<GetRolePage />} />
         <Route exact path='/update-role/:id' element={<UpdateRolePage />} />
+
+        {/* employee */}
+        <Route exact path='/create-employee' element={<CreateEmployeePage />} />
       </Routes>
     </BrowserRouter>
   );
