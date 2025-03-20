@@ -4,6 +4,7 @@ import CreateUserPage from "./pages/CreateUserPage";
 import UpdateUserPage from "./pages/UpdateUserPage";
 import GetUserPage from "./pages/GetUserPage";
 import CreateDepartmentPage from "./pages/CreateDepartmentPage";
+import UpdateDepartmentPage from "./pages/UpdateDepartmentPage";
 
 function App() {
   return (
@@ -17,6 +18,11 @@ function App() {
           exact
           path='/create-department'
           element={<CreateDepartmentPage />}
+        />
+        <Route
+          exact
+          path='/update-department/:id'
+          element={<UpdateDepartmentPage />}
         />
       </Routes>
     </BrowserRouter>
