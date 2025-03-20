@@ -13,7 +13,9 @@ export const createUser = async (req, res) => {
     });
 
     if (!!isUser === true) {
-      return res.status(409).json({ message: "Email already exists" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Email already exists" });
     }
 
     let user = await prisma.user.create({
@@ -23,7 +25,9 @@ export const createUser = async (req, res) => {
         password,
       },
     });
-    res.status(201).json({ message: "User created successfully", user });
+    res
+      .status(201)
+      .json({ success: true, message: "User created successfully", user });
   } catch (error) {
     res
       .status(500)
@@ -90,11 +94,15 @@ export const getAllUser = async (req, res) => {
       },
     });
 
-    res.status(200).json({ allUsers });
+    res.status(200).json({ success: true, allUsers });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 

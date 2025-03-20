@@ -37,7 +37,7 @@ import { fileUpload } from "../controllers/fileUploadController.js";
 const router = express.Router();
 
 // User routes
-router.post("/create-user", AuthVerification, createUser);
+router.post("/create-user", createUser);
 router.post("/login-user", loginUser);
 router.get("/get-all-user", getAllUser);
 router.get("/get-single-user/:id", getSingleUser);
