@@ -1,5 +1,5 @@
 import React from "react";
-import MasterLayout from "../layout/Masterlayout";
+import MasterLayout from "../layout/MasterLayout";
 import UpdateUser from "../components/UpdateUser";
 
 const UpdateUserPage = () => {

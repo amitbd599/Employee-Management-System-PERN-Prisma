@@ -1,6 +1,5 @@
 import React from "react";
-import MasterLayout from "../layout/Masterlayout";
-import Dashboard from "../components/Dashboard";
+import MasterLayout from "../layout/MasterLayout";
 import CreateUser from "../components/CreateUser";
 
 const CreateUserPage = () => {
