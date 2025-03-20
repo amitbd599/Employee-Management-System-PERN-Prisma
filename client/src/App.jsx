@@ -5,6 +5,7 @@ import UpdateUserPage from "./pages/UpdateUserPage";
 import GetUserPage from "./pages/GetUserPage";
 import CreateDepartmentPage from "./pages/CreateDepartmentPage";
 import UpdateDepartmentPage from "./pages/UpdateDepartmentPage";
+import GetDepartmentPage from "./pages/GetDepartmentPage";
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
           exact
           path='/update-department/:id'
           element={<UpdateDepartmentPage />}
+        />
+        <Route
+          exact
+          path='/get-all-department'
+          element={<GetDepartmentPage />}
         />
       </Routes>
     </BrowserRouter>
