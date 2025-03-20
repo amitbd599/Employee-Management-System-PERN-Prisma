@@ -8,15 +8,19 @@ import UpdateDepartmentPage from "./pages/UpdateDepartmentPage";
 import GetDepartmentPage from "./pages/GetDepartmentPage";
 import CreateRolePage from "./pages/CreateRolePage";
 import GetRolePage from "./pages/GetRolePage";
+import UpdateRolePage from "./pages/UpdateRolePage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={<HomePage />} />
+        {/* user */}
         <Route exact path='/create-user' element={<CreateUserPage />} />
         <Route exact path='/update-user' element={<UpdateUserPage />} />
         <Route exact path='/get-all-user' element={<GetUserPage />} />
+
+        {/* department */}
         <Route
           exact
           path='/create-department'
@@ -32,8 +36,10 @@ function App() {
           path='/get-all-department'
           element={<GetDepartmentPage />}
         />
+        {/* role */}
         <Route exact path='/create-role' element={<CreateRolePage />} />
         <Route exact path='/get-all-role' element={<GetRolePage />} />
+        <Route exact path='/update-role/:id' element={<UpdateRolePage />} />
       </Routes>
     </BrowserRouter>
   );
