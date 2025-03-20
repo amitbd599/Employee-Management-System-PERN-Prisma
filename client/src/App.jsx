@@ -7,6 +7,7 @@ import CreateDepartmentPage from "./pages/CreateDepartmentPage";
 import UpdateDepartmentPage from "./pages/UpdateDepartmentPage";
 import GetDepartmentPage from "./pages/GetDepartmentPage";
 import CreateRolePage from "./pages/CreateRolePage";
+import GetRolePage from "./pages/GetRolePage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           element={<GetDepartmentPage />}
         />
         <Route exact path='/create-role' element={<CreateRolePage />} />
+        <Route exact path='/get-all-role' element={<GetRolePage />} />
       </Routes>
     </BrowserRouter>
   );
