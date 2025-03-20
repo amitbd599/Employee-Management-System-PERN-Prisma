@@ -11,6 +11,7 @@ import GetRolePage from "./pages/GetRolePage";
 import UpdateRolePage from "./pages/UpdateRolePage";
 import CreateEmployeePage from "./pages/CreateEmployeePage";
 import GetEmployeePage from "./pages/GetEmployeePage";
+import GetGalleryFilePage from "./pages/GetGalleryFilePage";
 
 function App() {
   return (
@@ -49,6 +50,13 @@ function App() {
           exact
           path='/get-all-employee/:id'
           element={<GetEmployeePage />}
+        />
+
+        {/* gallery */}
+        <Route
+          exact
+          path='/get-all-gallery/:pageNo'
+          element={<GetGalleryFilePage />}
         />
       </Routes>
     </BrowserRouter>

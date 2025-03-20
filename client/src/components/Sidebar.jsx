@@ -153,7 +153,7 @@ export function Sidebar() {
               <ul className='pl-[20px] py-2 grid gap-2'>
                 <li>
                   <NavLink
-                    to='/create-employee'
+                    to='/get-all-gallery/1'
                     className={(navData) =>
                       navData.isActive ? "nav__item_active" : "nav__item"
                     }
