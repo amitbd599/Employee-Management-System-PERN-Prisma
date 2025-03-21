@@ -18,9 +18,9 @@ model User {
 }
 
 enum UserRole {
+  MANAGER
   ADMIN
   USER
-  MANAGER
   EMPLOYEE
   SUPERVISOR
   DEVELOPER

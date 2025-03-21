@@ -3,6 +3,7 @@ import UserStore from "../../store/UserStore";
 import Skeleton from "react-loading-skeleton";
 import { DeleteAlert, formatDate } from "../helper/helper";
 import { FaRegPenToSquare, FaTrashCan } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 const GetUser = () => {
   let { getAllUsersRequest, allUser, deleteUserRequest } = UserStore();
 
@@ -97,9 +98,9 @@ const GetUser = () => {
                           >
                             <FaTrashCan className='text-[16px]' />
                           </button>
-                          <button className='p-1'>
+                          <Link className='p-1' to={`/update-user/${item?.id}`}>
                             <FaRegPenToSquare className='text-[16px]' />
-                          </button>
+                          </Link>
                         </div>
                       </td>
                     </tr>

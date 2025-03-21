@@ -84,7 +84,7 @@ const CreateUser = () => {
         name,
         password,
         email,
-        role: "SUPERVISOR",
+        role,
         img,
       });
       if (result) {

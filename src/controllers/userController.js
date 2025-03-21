@@ -4,7 +4,7 @@ import { EncodeToken } from "../utility/TokenHelper.js";
 //! create User
 export const createUser = async (req, res) => {
   try {
-    let { name, email, img, password } = req.body;
+    let { name, email, img, password, role } = req.body;
 
     const isUser = await prisma.user.findUnique({
       where: {
@@ -23,6 +23,7 @@ export const createUser = async (req, res) => {
         name,
         email,
         img,
+        role,
         password,
       },
     });
@@ -50,7 +51,9 @@ export const loginUser = async (req, res) => {
     });
 
     if (!!user === false) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     if (!!user === true) {
@@ -58,7 +61,7 @@ export const loginUser = async (req, res) => {
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
         secure: true,
       };
@@ -66,6 +69,7 @@ export const loginUser = async (req, res) => {
       // Set cookie
       res.cookie("Token", token, options);
       res.status(200).json({
+        success: true,
         message: "Login successful",
         user: {
           email: user.email,
@@ -76,9 +80,11 @@ export const loginUser = async (req, res) => {
       });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error logging in", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Error logging in",
+      error: error.toString(),
+    });
   }
 };
 
@@ -122,11 +128,13 @@ export const getSingleUser = async (req, res) => {
       },
     });
 
-    res.status(200).json({ user });
+    res.status(200).json({ success: true, user });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
