@@ -25,3 +25,7 @@
     @apply font-medium rounded-s-lg  block border-b px-[20px] py-[10px] pl-[20px] mr-2 bg-[#487FFF] text-white transition-all duration-300;
   }
 }
+
+.ReactModal__Overlay--after-open {
+  background: rgb(0 0 0 / 60%) !important;
+}
