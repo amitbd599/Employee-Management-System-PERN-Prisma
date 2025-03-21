@@ -6,12 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { FaTrashCan } from "react-icons/fa6";
 import FileStore from "../../store/FileStore";
-import {
-  DeleteAlert,
-  ErrorToast,
-  IsEmpty,
-  SuccessToast,
-} from "../helper/helper";
+import { DeleteAlert, ErrorToast, IsEmpty } from "../helper/helper";
 const CreateUser = () => {
   const [role, setRole] = useState("EMPLOYEE");
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -83,11 +78,13 @@ const CreateUser = () => {
       ErrorToast("Image is required. ");
       return;
     } else {
+      console.log(name, password, email, role, img);
+
       let result = await createUserRequest({
         name,
         password,
         email,
-        role,
+        role: "SUPERVISOR",
         img,
       });
       if (result) {
