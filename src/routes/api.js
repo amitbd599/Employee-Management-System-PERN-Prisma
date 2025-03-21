@@ -32,7 +32,11 @@ import {
 } from "../controllers/roleController.js";
 import { AuthVerification } from "../middlewares/AuthVerification.js";
 import { uploadFile } from "../middlewares/FileUploads.js";
-import { fileUpload, getAllFile } from "../controllers/fileUploadController.js";
+import {
+  fileDelete,
+  fileUpload,
+  getAllFile,
+} from "../controllers/fileUploadController.js";
 
 const router = express.Router();
 
@@ -74,5 +78,6 @@ router.post(
   fileUpload
 );
 router.get("/get-all-file", getAllFile);
+router.delete("/delete-file/:id", fileDelete);
 
 export default router;

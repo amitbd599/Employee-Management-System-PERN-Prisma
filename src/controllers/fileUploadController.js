@@ -1,8 +1,6 @@
 import prisma from "../../config/db.js";
 
 export const fileUpload = async (req, res) => {
-  console.log(req.file.filename);
-
   try {
     let file = await prisma.file.create({
       data: {
@@ -24,6 +22,7 @@ export const getAllFile = async (req, res) => {
     const files = await prisma.file.findMany({
       orderBy: { createdAt: "desc" },
       select: {
+        id: true,
         path: true,
       },
     });
@@ -32,6 +31,38 @@ export const getAllFile = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error fetching files",
+      error: error.toString(),
+    });
+  }
+};
+
+export const fileDelete = async (req, res) => {
+  try {
+    const isFile = await prisma.file.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!!isFile === false) {
+      return res
+        .status(200)
+        .json({ success: false, message: "File not exists." });
+    }
+
+    await prisma.file.delete({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "File delete successfully." });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
       error: error.toString(),
     });
   }

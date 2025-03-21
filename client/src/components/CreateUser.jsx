@@ -1,6 +1,6 @@
 import { Option, Select } from "@material-tailwind/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "./SubmitButton";
@@ -8,13 +8,15 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { FaTrashCan } from "react-icons/fa6";
 import FileStore from "../../store/FileStore";
+import { DeleteAlert } from "../helper/helper";
 const CreateUser = () => {
   const [role, setRole] = useState("EMPLOYEE");
   let navigate = useNavigate();
   let { createUserRequest } = UserStore();
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  let { getAllFileRequest, files, uploadFileRequest } = FileStore();
+  let { getAllFileRequest, files, uploadFileRequest, deleteFileRequest } =
+    FileStore();
 
   // useEffect(() => {
   //   (async () => {
@@ -34,6 +36,7 @@ const CreateUser = () => {
   };
 
   const [image, setImage] = useState(null);
+  const [selectImage, setSelectImage] = useState(null);
   const [file, setFile] = useState(null);
   const handleImagePreview = (event) => {
     const file = event.target.files[0];
@@ -50,6 +53,18 @@ const CreateUser = () => {
       setImage(null);
     }
   };
+
+  let deleteFile = async (id) => {
+    let isConfirmed = await DeleteAlert();
+
+    if (isConfirmed) {
+      let result = await deleteFileRequest(id);
+      if (result) {
+        await getAllFileRequest();
+      }
+    }
+  };
+  console.log(selectImage);
 
   return (
     <section>
@@ -76,7 +91,10 @@ const CreateUser = () => {
             })}
             onSubmit={async (values, { setSubmitting }) => {
               values.role = role;
+              values.img = selectImage;
               let result = await createUserRequest(values);
+              console.log(values);
+
               if (result) {
                 setSubmitting(false);
                 navigate("/get-all-user");
@@ -166,7 +184,17 @@ const CreateUser = () => {
                       onClick={openModal}
                       className='w-full bg-blue-50 cursor-pointer h-full flex justify-center items-center rounded-md'
                     >
-                      <p>Add media file</p>
+                      {selectImage ? (
+                        <div className='w-full h-[200px]'>
+                          <img
+                            src={`api/get-file/${selectImage}`}
+                            alt='Uploaded Preview'
+                            className='w-full h-full object-contain object-top '
+                          />
+                        </div>
+                      ) : (
+                        <p>Add media file</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -194,18 +222,28 @@ const CreateUser = () => {
           close
         </button>
         <div className=' z-[99]  mx-auto mt-[30px]'>
+          <h3 className='font-semibold text-[20px]  pl-[20px]'>
+            Total File: {files?.length}
+          </h3>
           <div className='grid grid-cols-12 gap-4  bg-white p-[20px] '>
             <div className='col-span-9 border-r '>
-              <div className='h-[calc(100vh-200px)] overflow-auto'>
+              <div className='h-[calc(100vh-250px)] overflow-auto'>
                 <div className='grid grid-cols-1 gap-4 sm:grid-cols-4 md:grid-cols-5  rounded-md '>
-                  {files?.map(({ path }, index) => (
+                  {files?.map(({ path, id }, index) => (
                     <div key={index} className='relative '>
                       <img
-                        className='h-[160px] w-full border-[3px] shadow-md border-red-500 max-w-full rounded-lg object-cover object-center grayscale hover:grayscale-0 transition-all duration-300 hover:cursor-pointer'
+                        className='h-[160px] w-full border-[3px] shadow-md border-red-500 max-w-full rounded-lg object-cover object-top grayscale hover:grayscale-0 transition-all duration-300 hover:cursor-pointer'
                         src={`api/get-file/${path}`}
                         alt='gallery-photo'
+                        onClick={() => {
+                          setSelectImage(path);
+                          closeModal();
+                        }}
                       />
-                      <button className='absolute right-[10px] top-[10px] bg-red-500 p-[14px] rounded-full '>
+                      <button
+                        onClick={() => deleteFile(id)}
+                        className='absolute right-[10px] top-[10px] bg-red-500 p-[14px] rounded-full '
+                      >
                         <FaTrashCan className='text-[20px] text-white' />
                       </button>
                     </div>
