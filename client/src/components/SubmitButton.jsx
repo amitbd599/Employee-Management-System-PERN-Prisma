@@ -1,7 +1,7 @@
 import { Spinner } from "@material-tailwind/react";
-const SubmitButton = ({ text, isSubmitting }) => {
+const SubmitButton = ({ submitFun, text, isSubmitting }) => {
   return (
-    <div>
+    <>
       {isSubmitting ? (
         <button
           type='submit'
@@ -13,13 +13,14 @@ const SubmitButton = ({ text, isSubmitting }) => {
         </button>
       ) : (
         <button
+          onClick={submitFun}
           type='submit'
           className='px-[26px]  py-[12px] rounded bg-[#487FFF] text-white hover:bg-blue-600 focus:outline-none transition'
         >
           {text}
         </button>
       )}
-    </div>
+    </>
   );
 };
 

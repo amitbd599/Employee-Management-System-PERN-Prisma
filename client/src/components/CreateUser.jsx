@@ -1,31 +1,28 @@
 import { Option, Select } from "@material-tailwind/react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useState } from "react";
-import * as Yup from "yup";
+import { useRef, useState } from "react";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "./SubmitButton";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { FaTrashCan } from "react-icons/fa6";
 import FileStore from "../../store/FileStore";
-import { DeleteAlert } from "../helper/helper";
+import {
+  DeleteAlert,
+  ErrorToast,
+  IsEmpty,
+  SuccessToast,
+} from "../helper/helper";
 const CreateUser = () => {
   const [role, setRole] = useState("EMPLOYEE");
-  let navigate = useNavigate();
-  let { createUserRequest } = UserStore();
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const [image, setImage] = useState(null);
+  const [selectImage, setSelectImage] = useState("");
+  const [file, setFile] = useState(null);
+  let navigate = useNavigate();
+  let { createUserRequest, loadingRequest } = UserStore();
+  let { nameRef, passwordRef, emailRef } = useRef();
   let { getAllFileRequest, files, uploadFileRequest, deleteFileRequest } =
     FileStore();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     await getAllFileRequest();
-  //   })();
-  // }, [getAllFileRequest]);
-
-  console.log(files);
-
   let openModal = async () => {
     setIsOpen(true);
     await getAllFileRequest();
@@ -35,9 +32,6 @@ const CreateUser = () => {
     setIsOpen(false);
   };
 
-  const [image, setImage] = useState(null);
-  const [selectImage, setSelectImage] = useState(null);
-  const [file, setFile] = useState(null);
   const handleImagePreview = (event) => {
     const file = event.target.files[0];
     setFile(file);
@@ -64,7 +58,43 @@ const CreateUser = () => {
       }
     }
   };
-  console.log(selectImage);
+
+  let createUser = async () => {
+    console.log("Creating user...");
+
+    let name = nameRef.value;
+    let password = passwordRef.value;
+    let email = emailRef.value;
+    let img = selectImage;
+
+    if (IsEmpty(name)) {
+      ErrorToast("Name is required. ");
+      return;
+    } else if (IsEmpty(password)) {
+      ErrorToast("Password is required. ");
+      return;
+    } else if (IsEmpty(email)) {
+      ErrorToast("Email is required. ");
+      return;
+    } else if (IsEmpty(role)) {
+      ErrorToast("Role is required. ");
+      return;
+    } else if (IsEmpty(img)) {
+      ErrorToast("Image is required. ");
+      return;
+    } else {
+      let result = await createUserRequest({
+        name,
+        password,
+        email,
+        role,
+        img,
+      });
+      if (result) {
+        navigate("/get-all-user");
+      }
+    }
+  };
 
   return (
     <section>
@@ -75,138 +105,90 @@ const CreateUser = () => {
             Create a new user
           </h1>
 
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              password: "",
-            }}
-            enableReinitialize={true}
-            validationSchema={Yup.object({
-              name: Yup.string().required("Required"),
-              email: Yup.string().required("Required"),
-              password: Yup.string()
-                .min(8, "Minium password 8 characters")
-                .required("Required"),
-            })}
-            onSubmit={async (values, { setSubmitting }) => {
-              values.role = role;
-              values.img = selectImage;
-              let result = await createUserRequest(values);
-              console.log(values);
-
-              if (result) {
-                setSubmitting(false);
-                navigate("/get-all-user");
-              }
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <div className='grid grid-cols-12 gap-[30px]'>
-                  <div className='col-span-6 mb-4'>
-                    <div className='w-full grid gap-1'>
-                      <label htmlFor='name' className='text-gray-600'>
-                        Name:
-                      </label>
-                      <Field
-                        id='name'
-                        name='name'
-                        type='text'
-                        className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
-                      />
-                      <ErrorMessage
-                        name='name'
-                        component='div'
-                        className='error text-red-400'
-                      />
-                    </div>
-                    <div className='w-full grid gap-1'>
-                      <label htmlFor='email' className='text-gray-600'>
-                        Email:
-                      </label>
-                      <Field
-                        id='email'
-                        name='email'
-                        type='email'
-                        className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
-                      />
-                      <ErrorMessage
-                        name='email'
-                        component='div'
-                        className='error text-red-400'
-                      />
-                    </div>
-                    <div className='w-full grid gap-1'>
-                      <label htmlFor='password' className='text-gray-600'>
-                        Password:
-                      </label>
-                      <Field
-                        id='password'
-                        name='password'
-                        type='password'
-                        className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
-                      />
-                      <ErrorMessage
-                        name='password'
-                        component='div'
-                        className='error text-red-400'
-                      />
-                    </div>
-                    <div className=' w-full'>
-                      <div className='w-full grid gap-1'>
-                        <label htmlFor='role' className='text-gray-600'>
-                          Role:
-                        </label>
-                        <Select
-                          label='Select Version'
-                          value={role}
-                          onChange={(val) => setRole(val)}
-                          className='border p-2 rounded w-full'
-                        >
-                          <Option value='ADMIN'>ADMIN</Option>
-                          <Option value='USER'>USER</Option>
-                          <Option value='MANAGER'>MANAGER</Option>
-                          <Option value='EMPLOYEE'>EMPLOYEE</Option>
-                          <Option value='SUPERVISOR'>SUPERVISOR</Option>
-                          <Option value='DEVELOPER'>DEVELOPER</Option>
-                        </Select>
-                        <ErrorMessage
-                          name='color'
-                          component='div'
-                          className='error text-red-400'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className='col-span-6 mb-4'>
-                    <div
-                      onClick={openModal}
-                      className='w-full bg-blue-50 cursor-pointer h-full flex justify-center items-center rounded-md'
+          <div className='grid grid-cols-12 gap-[30px]'>
+            <div className='col-span-6 mb-4'>
+              <div className='grid gap-2'>
+                <div className='w-full grid gap-1'>
+                  <label htmlFor='name' className='text-gray-600'>
+                    Name:
+                  </label>
+                  <input
+                    ref={(input) => (nameRef = input)}
+                    id='name'
+                    type='text'
+                    className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
+                  />
+                </div>
+                <div className='w-full grid gap-1'>
+                  <label htmlFor='email' className='text-gray-600'>
+                    Email:
+                  </label>
+                  <input
+                    ref={(input) => (emailRef = input)}
+                    id='email'
+                    type='email'
+                    className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
+                  />
+                </div>
+                <div className='w-full grid gap-1'>
+                  <label htmlFor='password' className='text-gray-600'>
+                    Password:
+                  </label>
+                  <input
+                    ref={(input) => (passwordRef = input)}
+                    id='password'
+                    type='password'
+                    className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
+                  />
+                </div>
+                <div className=' w-full'>
+                  <div className='w-full grid gap-1'>
+                    <label htmlFor='role' className='text-gray-600'>
+                      Role:
+                    </label>
+                    <Select
+                      label='Select Version'
+                      value={role}
+                      onChange={(val) => setRole(val)}
+                      className='border p-2 rounded w-full'
                     >
-                      {selectImage ? (
-                        <div className='w-full h-[200px]'>
-                          <img
-                            src={`api/get-file/${selectImage}`}
-                            alt='Uploaded Preview'
-                            className='w-full h-full object-contain object-top '
-                          />
-                        </div>
-                      ) : (
-                        <p>Add media file</p>
-                      )}
-                    </div>
+                      <Option value='ADMIN'>ADMIN</Option>
+                      <Option value='USER'>USER</Option>
+                      <Option value='MANAGER'>MANAGER</Option>
+                      <Option value='EMPLOYEE'>EMPLOYEE</Option>
+                      <Option value='SUPERVISOR'>SUPERVISOR</Option>
+                      <Option value='DEVELOPER'>DEVELOPER</Option>
+                    </Select>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className='col-span-6 mb-4'>
+              <div
+                onClick={openModal}
+                className='w-full bg-gray-200 cursor-pointer h-full flex justify-center items-center rounded-md'
+              >
+                {selectImage ? (
+                  <div className='w-full h-[200px]'>
+                    <img
+                      src={`api/get-file/${selectImage}`}
+                      alt='Uploaded Preview'
+                      className='w-full h-full object-contain object-top '
+                    />
+                  </div>
+                ) : (
+                  <p className='text-[40px] font-medium'>Add media file</p>
+                )}
+              </div>
+            </div>
+          </div>
 
-                <SubmitButton
-                  text='Create new user'
-                  type='submit'
-                  isSubmitting={isSubmitting}
-                />
-              </Form>
-            )}
-          </Formik>
+          <SubmitButton
+            text='Create new user'
+            type='submit'
+            submitFun={createUser}
+            isSubmitting={loadingRequest}
+          />
         </div>
       </>
 
@@ -232,7 +214,7 @@ const CreateUser = () => {
                   {files?.map(({ path, id }, index) => (
                     <div key={index} className='relative '>
                       <img
-                        className='h-[160px] w-full border-[3px] shadow-md border-red-500 max-w-full rounded-lg object-cover object-top grayscale hover:grayscale-0 transition-all duration-300 hover:cursor-pointer'
+                        className='h-[160px] w-full border-[3px] shadow-md border-red-500 max-w-full rounded-lg object-contain object-top grayscale hover:grayscale-0 transition-all duration-300 hover:cursor-pointer'
                         src={`api/get-file/${path}`}
                         alt='gallery-photo'
                         onClick={() => {
@@ -296,7 +278,7 @@ const CreateUser = () => {
                         <img
                           src={image}
                           alt='Uploaded Preview'
-                          className='w-full h-full object-cover '
+                          className='w-full h-full object-contain '
                         />
                       </div>
 
