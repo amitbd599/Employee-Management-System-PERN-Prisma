@@ -54,7 +54,7 @@ const CreateUser = () => {
     }
   };
 
-  let createUser = async () => {
+  let submitCreateUser = async () => {
     console.log("Creating user...");
 
     let name = nameRef.value;
@@ -183,7 +183,7 @@ const CreateUser = () => {
           <SubmitButton
             text='Create new user'
             type='submit'
-            submitFun={createUser}
+            submitFun={submitCreateUser}
             isSubmitting={loadingRequest}
           />
         </div>
