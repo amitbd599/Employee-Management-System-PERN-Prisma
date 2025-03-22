@@ -15,6 +15,7 @@ const PrivateRoute = ({ children }) => {
           setIsLogin(false);
         }
       } catch (error) {
+        console.error(error);
         setIsLogin(false);
       } finally {
         setLoading(false); // Set loading to false after verification

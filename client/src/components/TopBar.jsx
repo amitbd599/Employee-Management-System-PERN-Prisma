@@ -6,8 +6,18 @@ import {
   Avatar,
   Typography,
 } from "@material-tailwind/react";
+import UserStore from "../../store/UserStore";
+import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
+  let navigate = useNavigate();
+  let { logoutRequest } = UserStore();
+  const handleLogout = async () => {
+    let result = await logoutRequest();
+    if (result) {
+      navigate("/login");
+    }
+  };
   return (
     <div className='h-[60px] shadow-md w-full flex justify-end items-center pr-[40px] '>
       <Menu>
@@ -115,7 +125,11 @@ const TopBar = () => {
                 fill='#90A4AE'
               />
             </svg>
-            <Typography variant='small' className='font-medium'>
+            <Typography
+              onClick={handleLogout}
+              variant='small'
+              className='font-medium'
+            >
               Sign Out
             </Typography>
           </MenuItem>

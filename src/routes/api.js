@@ -7,6 +7,7 @@ import {
   getSingleUser,
   getUserByRole,
   loginUser,
+  logoutUser,
   updateSingleUser,
 } from "../controllers/userController.js";
 import {
@@ -43,6 +44,7 @@ const router = express.Router();
 // User routes
 router.post("/create-user", createUser);
 router.post("/login-user", loginUser);
+router.get("/logout-user", logoutUser);
 router.get("/get-all-user", getAllUser);
 router.get("/get-single-user/:id", getSingleUser);
 router.get("/get-user-by-role/:role", getUserByRole);

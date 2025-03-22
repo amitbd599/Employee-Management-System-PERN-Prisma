@@ -88,7 +88,21 @@ export const loginUser = async (req, res) => {
   }
 };
 
-//! get All User
+//! logout
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("Token");
+    res.status(200).json({ success: true, message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error logging out",
+      error: error.toString(),
+    });
+  }
+};
+
+//! get All User || remove
 export const getAllUser = async (req, res) => {
   try {
     const allUsers = await prisma.user.findMany({
@@ -138,7 +152,7 @@ export const getSingleUser = async (req, res) => {
   }
 };
 
-//! get User by role
+//! get User by role || remove
 export const getUserByRole = async (req, res) => {
   try {
     const user = await prisma.user.findMany({
@@ -162,7 +176,7 @@ export const getUserByRole = async (req, res) => {
   }
 };
 
-//! delete Single User
+//! delete Single User || remove
 export const deleteSingleUser = async (req, res) => {
   try {
     const isUser = await prisma.user.findUnique({
