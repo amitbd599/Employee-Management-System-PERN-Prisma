@@ -221,7 +221,9 @@ export const updateSingleUser = async (req, res) => {
     });
 
     if (!!isUserId === false) {
-      return res.status(200).json({ message: "User not exists." });
+      return res
+        .status(200)
+        .json({ success: false, message: "User not exists." });
     }
 
     // step 2: update user
@@ -237,10 +239,16 @@ export const updateSingleUser = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "User update successfully.", user });
+    res
+      .status(200)
+      .json({ success: true, message: "User update successfully.", user });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };

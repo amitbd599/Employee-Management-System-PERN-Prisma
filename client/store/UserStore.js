@@ -46,6 +46,23 @@ const UserStore = create((set) => ({
     }
   },
 
+  // update-single-user
+  updateUser: async (id, reqBody) => {
+    try {
+      let res = await axios.put(`/api/update-single-user/${id}`, reqBody);
+      if (res?.data?.success === true) {
+        SuccessToast(res?.data?.message);
+        return true;
+      } else {
+        ErrorToast(res?.data?.message);
+        return false;
+      }
+    } catch (e) {
+      ErrorToast("Something went wrong!");
+      console.log(e);
+    }
+  },
+
   // logout
   logoutRequest: async () => {
     try {
