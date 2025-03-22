@@ -28,9 +28,9 @@ const UserStore = create((set) => ({
 
   // get-single-user
   singleUser: null,
-  singleUsersRequest: async (id) => {
+  singleUsersRequest: async () => {
     try {
-      let res = await axios.get(`/api/get-single-user/${id}`);
+      let res = await axios.get(`/api/get-single-user`);
       console.log(res);
 
       if (res?.data?.success === true) {

@@ -45,10 +45,10 @@ const router = express.Router();
 router.post("/create-user", createUser);
 router.post("/login-user", loginUser);
 router.get("/logout-user", logoutUser);
-router.get("/get-all-user", getAllUser);
-router.get("/get-single-user/:id", getSingleUser);
-router.get("/get-user-by-role/:role", getUserByRole);
-router.delete("/delete-single-user/:id", deleteSingleUser);
+// router.get("/get-all-user", getAllUser);
+router.get("/get-single-user", AuthVerification, getSingleUser);
+// router.get("/get-user-by-role/:role", getUserByRole);
+// router.delete("/delete-single-user/:id", deleteSingleUser);
 router.put("/update-single-user/:id", updateSingleUser);
 
 // Department routes

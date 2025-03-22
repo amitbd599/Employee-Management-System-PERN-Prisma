@@ -1,6 +1,3 @@
--- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('MANAGER', 'ADMIN', 'USER', 'EMPLOYEE', 'SUPERVISOR', 'DEVELOPER');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -8,7 +5,6 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "img" TEXT NOT NULL,
-    "role" "UserRole" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")

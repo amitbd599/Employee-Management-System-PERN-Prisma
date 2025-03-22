@@ -14,11 +14,13 @@ import GetEmployeePage from "./pages/GetEmployeePage";
 import GetGalleryFilePage from "./pages/GetGalleryFilePage";
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route exact path='/login' element={<LoginPage />} />
         <Route
           exact
           path='/'
@@ -28,7 +30,15 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route exact path='/login' element={<LoginPage />} />
+        <Route
+          exact
+          path='/profile'
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
         {/* user */}
         <Route exact path='/create-user' element={<CreateUserPage />} />
         <Route exact path='/update-user/:id' element={<UpdateUserPage />} />

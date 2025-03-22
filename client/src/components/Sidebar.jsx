@@ -28,7 +28,7 @@ export function Sidebar() {
                 </li>
                 <li>
                   <NavLink
-                    to='/'
+                    to='/profile'
                     className={(navData) =>
                       navData.isActive ? "nav__item_active" : "nav__item"
                     }

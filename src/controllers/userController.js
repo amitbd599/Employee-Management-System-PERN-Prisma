@@ -4,7 +4,7 @@ import { EncodeToken } from "../utility/TokenHelper.js";
 //! create User
 export const createUser = async (req, res) => {
   try {
-    let { name, email, img, password, role } = req.body;
+    let { name, email, password } = req.body;
 
     const isUser = await prisma.user.findUnique({
       where: {
@@ -22,8 +22,6 @@ export const createUser = async (req, res) => {
       data: {
         name,
         email,
-        img,
-        role,
         password,
       },
     });
@@ -128,10 +126,13 @@ export const getAllUser = async (req, res) => {
 
 //! get Single User
 export const getSingleUser = async (req, res) => {
+  console.log(req.headers.email);
+
   try {
+    let email = req.headers.email;
     const user = await prisma.user.findUnique({
       where: {
-        id: req.params.id,
+        email: email,
       },
       select: {
         id: true,
