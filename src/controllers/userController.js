@@ -125,8 +125,6 @@ export const getAllUser = async (req, res) => {
 
 //! get Single User
 export const getSingleUser = async (req, res) => {
-  console.log(req.headers.email);
-
   try {
     let email = req.headers.email;
     const user = await prisma.user.findUnique({
@@ -211,12 +209,16 @@ export const deleteSingleUser = async (req, res) => {
 //! update Single User
 export const updateSingleUser = async (req, res) => {
   try {
-    let { name, password, role } = req.body;
+    let id = req.headers.id;
+
+    console.log(id);
+
+    let { name, email, password } = req.body;
 
     // step 1: check if user id exists
     const isUserId = await prisma.user.findUnique({
       where: {
-        id: req.params.id,
+        id: id,
       },
     });
 
@@ -229,13 +231,13 @@ export const updateSingleUser = async (req, res) => {
     // step 2: update user
     const user = await prisma.user.update({
       where: {
-        id: req.params.id,
+        id: id,
       },
 
       data: {
+        email,
         name,
         password,
-        role,
       },
     });
 
@@ -243,12 +245,10 @@ export const updateSingleUser = async (req, res) => {
       .status(200)
       .json({ success: true, message: "User update successfully.", user });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };

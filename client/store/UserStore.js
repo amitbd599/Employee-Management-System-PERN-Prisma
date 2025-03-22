@@ -47,9 +47,9 @@ const UserStore = create((set) => ({
   },
 
   // update-single-user
-  updateUser: async (id, reqBody) => {
+  updateSingleUser: async (reqBody) => {
     try {
-      let res = await axios.put(`/api/update-single-user/${id}`, reqBody);
+      let res = await axios.put(`/api/update-single-user`, reqBody);
       if (res?.data?.success === true) {
         SuccessToast(res?.data?.message);
         return true;
@@ -69,7 +69,7 @@ const UserStore = create((set) => ({
       let res = await axios.get("/api/logout-user");
       console.log(res);
       if (res?.data?.success === true) {
-        SuccessToast(res?.data?.message);
+        window.location.href = "/login";
         return true;
       } else {
         ErrorToast(res?.data?.message);

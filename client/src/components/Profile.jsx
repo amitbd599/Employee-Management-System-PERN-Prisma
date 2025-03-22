@@ -5,9 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ErrorToast, formatDate, IsEmpty } from "../helper/helper";
 const Profile = () => {
   const [role, setRole] = useState("EMPLOYEE");
-  let navigate = useNavigate();
-  let { createUserRequest, loadingRequest, singleUsersRequest, singleUser } =
-    UserStore();
+  let {
+    updateSingleUser,
+    loadingRequest,
+    singleUsersRequest,
+    singleUser,
+    logoutRequest,
+  } = UserStore();
   let { nameRef, passwordRef, emailRef } = useRef();
 
   let { id } = useParams();
@@ -19,7 +23,7 @@ const Profile = () => {
     })();
   }, [id, singleUser?.role, singleUsersRequest]);
 
-  let updateUser = async () => {
+  let submitUpdateUser = async () => {
     let name = nameRef.value;
     let password = passwordRef.value;
     let email = emailRef.value;
@@ -33,20 +37,16 @@ const Profile = () => {
     } else if (IsEmpty(email)) {
       ErrorToast("Email is required. ");
       return;
-    } else if (IsEmpty(role)) {
-      ErrorToast("Role is required. ");
-      return;
     } else {
       console.log(name, password, email, role);
 
-      let result = await createUserRequest({
+      let result = await updateSingleUser({
         name,
         password,
         email,
-        role,
       });
       if (result) {
-        navigate("/get-all-user");
+        await logoutRequest();
       }
     }
   };
@@ -128,7 +128,7 @@ const Profile = () => {
           <SubmitButton
             text='Update Profile'
             type='submit'
-            submitFun={updateUser}
+            submitFun={submitUpdateUser}
             isSubmitting={loadingRequest}
           />
         </div>

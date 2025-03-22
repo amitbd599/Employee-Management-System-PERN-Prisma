@@ -4,6 +4,8 @@ export const EncodeToken = (email, id) => {
   let key = process.env.JWT_KEY;
   let expire = process.env.JWT_Expire_Time;
   let payload = { email, id };
+  console.log(payload);
+
   return jwt.sign(payload, key, { expiresIn: expire });
 };
 export const DecodeToken = (token) => {

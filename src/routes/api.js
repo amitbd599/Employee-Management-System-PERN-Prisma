@@ -49,7 +49,7 @@ router.get("/logout-user", logoutUser);
 router.get("/get-single-user", AuthVerification, getSingleUser);
 // router.get("/get-user-by-role/:role", getUserByRole);
 // router.delete("/delete-single-user/:id", deleteSingleUser);
-router.put("/update-single-user/:id", updateSingleUser);
+router.put("/update-single-user", AuthVerification, updateSingleUser);
 
 // Department routes
 router.post("/create-department", createDepartment);

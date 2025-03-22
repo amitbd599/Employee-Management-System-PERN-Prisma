@@ -12,6 +12,7 @@ export const AuthVerification = (req, res, next) => {
     });
   } else {
     req.headers.email = decoded["email"];
+    req.headers.id = decoded["id"];
     next();
   }
 };
