@@ -67,7 +67,6 @@ const UserStore = create((set) => ({
   logoutRequest: async () => {
     try {
       let res = await axios.get("/api/logout-user");
-      console.log(res);
       if (res?.data?.success === true) {
         window.location.href = "/login";
         return true;

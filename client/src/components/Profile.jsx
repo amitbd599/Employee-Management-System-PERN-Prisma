@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "./SubmitButton";
 import { useParams } from "react-router-dom";
 import { ErrorToast, formatDate, IsEmpty } from "../helper/helper";
 const Profile = () => {
-  const [role, setRole] = useState("EMPLOYEE");
   let {
     updateSingleUser,
     loadingRequest,
@@ -19,9 +18,8 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       await singleUsersRequest(id);
-      setRole(singleUser?.role);
     })();
-  }, [id, singleUser?.role, singleUsersRequest]);
+  }, [id, singleUsersRequest]);
 
   let submitUpdateUser = async () => {
     let name = nameRef.value;
@@ -38,8 +36,6 @@ const Profile = () => {
       ErrorToast("Email is required. ");
       return;
     } else {
-      console.log(name, password, email, role);
-
       let result = await updateSingleUser({
         name,
         password,
