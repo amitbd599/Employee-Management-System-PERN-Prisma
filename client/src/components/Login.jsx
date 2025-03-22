@@ -1,12 +1,20 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import UserStore from "../../store/UserStore";
 import { ErrorToast, IsEmpty } from "../helper/helper";
 import { useNavigate } from "react-router-dom";
-
+import SubmitButton from "./SubmitButton";
+import Cookies from "js-cookie";
 const Login = () => {
   let { loginUsersRequest, loadingRequest } = UserStore();
   let { emailRef, passwordRef } = useRef();
   let navigate = useNavigate();
+  let token = Cookies.get("Token");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate, token]);
 
   let loginSubmit = async () => {
     let email = emailRef.value;
@@ -56,13 +64,12 @@ const Login = () => {
                 placeholder='••••••••'
               />
             </div>
-
-            <button
-              onClick={loginSubmit}
-              className='w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors'
-            >
-              Sign In
-            </button>
+            <SubmitButton
+              text='Login'
+              type='submit'
+              submitFun={loginSubmit}
+              isSubmitting={loadingRequest}
+            />
           </div>
         </div>
       </div>

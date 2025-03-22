@@ -21,7 +21,7 @@ const UserStore = create((set) => ({
       }
     } catch (e) {
       ErrorToast("Something went wrong!");
-      // console.log(e);
+      console.log(e);
       set({ loadingRequest: false });
     }
   },
