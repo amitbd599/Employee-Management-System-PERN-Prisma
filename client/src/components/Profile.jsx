@@ -3,10 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "./SubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
-import Modal from "react-modal";
-import { FaTrashCan } from "react-icons/fa6";
-import FileStore from "../../store/FileStore";
-import { DeleteAlert, ErrorToast, IsEmpty } from "../helper/helper";
+import { ErrorToast, formatDate, IsEmpty } from "../helper/helper";
 const Profile = () => {
   const [role, setRole] = useState("EMPLOYEE");
   let navigate = useNavigate();
@@ -102,31 +99,11 @@ const Profile = () => {
                     className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
                   />
                 </div>
-                <div className=' w-full'>
-                  <div className='w-full grid gap-1'>
-                    <label htmlFor='role' className='text-gray-600'>
-                      Role:
-                    </label>
-                    <Select
-                      label='Select Version'
-                      value={role}
-                      onChange={(val) => setRole(val)}
-                      className='border p-2 rounded w-full'
-                    >
-                      <Option value='ADMIN'>ADMIN</Option>
-                      <Option value='USER'>USER</Option>
-                      <Option value='MANAGER'>MANAGER</Option>
-                      <Option value='EMPLOYEE'>EMPLOYEE</Option>
-                      <Option value='SUPERVISOR'>SUPERVISOR</Option>
-                      <Option value='DEVELOPER'>DEVELOPER</Option>
-                    </Select>
-                  </div>
-                </div>
               </div>
             </div>
             <div className='col-span-6 mb-4'>
               <div>
-                <h2 className='text-[30px] font-bold text-gray-700 border-b'>
+                <h2 className='text-[22px] font-bold text-gray-700 border-b'>
                   Profile Information:
                 </h2>
                 <div className='pt-[20px]'>
@@ -139,6 +116,10 @@ const Profile = () => {
                       <span className='font-semibold'>Email:</span>
                       <span>{singleUser?.email}</span>
                     </li>
+                    <li className='grid gap-[1px]'>
+                      <span className='font-semibold'>Create Date:</span>
+                      <span> {formatDate(singleUser?.createdAt)}</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -146,7 +127,7 @@ const Profile = () => {
           </div>
 
           <SubmitButton
-            text='Create new user'
+            text='Update Profile'
             type='submit'
             submitFun={updateUser}
             isSubmitting={loadingRequest}

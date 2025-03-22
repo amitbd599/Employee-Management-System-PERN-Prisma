@@ -1,8 +1,9 @@
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-const MySwal = withReactContent(Swal);
 import moment from "moment";
+import UserStore from "../../store/UserStore";
+const MySwal = withReactContent(Swal);
 
 class FormHelper {
   IsEmpty(value) {
