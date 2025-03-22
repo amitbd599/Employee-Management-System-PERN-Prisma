@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "./SubmitButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ErrorToast, formatDate, IsEmpty } from "../helper/helper";
 const Profile = () => {
   const [role, setRole] = useState("EMPLOYEE");
