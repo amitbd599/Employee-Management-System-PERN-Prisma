@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import DepartmentStore from "../../store/DepartmentStore";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateDepartment = () => {
+  let {
+    updateDepartmentRequest,
+    getSingleDepartmentRequest,
+    singleDepartment,
+  } = DepartmentStore();
+  let navigate = useNavigate();
+  let { nameRef } = useRef();
+  let { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      await getSingleDepartmentRequest(id);
+    })();
+  }, [getSingleDepartmentRequest, id]);
+
+  console.log(singleDepartment);
+
   return (
     <section>
       <>
@@ -17,6 +36,8 @@ const UpdateDepartment = () => {
                   Name:
                 </label>
                 <input
+                  ref={(input) => (nameRef = input)}
+                  defaultValue={singleDepartment?.name}
                   id='Name'
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'

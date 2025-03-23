@@ -60,21 +60,41 @@ const DepartmentStore = create((set) => ({
     }
   },
 
+  // get-single-department
+  singleDepartment: null,
+  getSingleDepartmentRequest: async (id) => {
+    try {
+      const res = await axios.get(`/api/get-single-department/${id}`);
+      if (res?.data?.success === true) {
+        set({ singleDepartment: res?.data?.department });
+      } else {
+        ErrorToast(res?.data?.message);
+      }
+    } catch (e) {
+      ErrorToast("Something went wrong!");
+      console.log(e);
+    }
+  },
+
   // update-single-department
   updateDepartmentRequest: async (reqBody, id) => {
     try {
+      set({ loadingRequest: true });
       const res = await axios.put(
         `/api/update-single-department/${id}`,
         reqBody
       );
       if (res?.data?.success === true) {
+        set({ loadingRequest: false });
         SuccessToast(res?.data?.message);
         return true;
       } else {
+        set({ loadingRequest: false });
         ErrorToast(res?.data?.message);
         return false;
       }
     } catch (e) {
+      set({ loadingRequest: false });
       ErrorToast("Something went wrong!");
       console.log(e);
     }
