@@ -1,6 +1,26 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import EmployeeStore from "../../store/EmployeeStore";
+import { useNavigate, useParams } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 const GetEmployee = () => {
+  let { getAllEmployeesRequest, allEmployees, totalEmployee } = EmployeeStore();
+  let navigate = useNavigate();
+  const params = useParams();
+  useEffect(() => {
+    (async () => {
+      await getAllEmployeesRequest(10, 1);
+    })();
+  }, [getAllEmployeesRequest]);
+
+  //! handelPageClick
+  const handelPageClick = (event) => {
+    let pageNo = event.selected;
+    getAllEmployeesRequest(10, pageNo + 1);
+    navigate(`/get-all-employee/${pageNo + 1}`);
+  };
+
+  console.log(totalEmployee);
+
   return (
     <div>
       <section className='bg-white  shadow-md rounded-lg p-6'>
@@ -403,6 +423,32 @@ const GetEmployee = () => {
               </tr>
             </tbody>
           </table>
+          <div className='d-flex align-items-center justify-content-between flex-wrap gap-2 mt-24'>
+            <span>Showing 1 to 10 of {totalEmployee} entries</span>
+            {totalEmployee > 10 ? (
+              <div>
+                <ReactPaginate
+                  className='pagination d-flex flex-wrap align-items-center gap-2 justify-content-center'
+                  previousLabel='<'
+                  nextLabel='>'
+                  pageClassName='page-item'
+                  activeClassName='active'
+                  pageLinkClassName=' page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px  text-md'
+                  previousLinkClassName='page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px  text-md'
+                  nextLinkClassName='text-secondary-light'
+                  activeLinkClassName=' active-link'
+                  breakLabel='...'
+                  pageCount={totalEmployee / 10}
+                  initialPage={params.pageNo - 1}
+                  pageRangeDisplayed={3}
+                  onPageChange={handelPageClick}
+                  type='button'
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </section>
     </div>

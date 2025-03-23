@@ -28,11 +28,17 @@ const EmployeeStore = create((set) => ({
 
   // get-all-employee
   allEmployees: null,
-  getAllEmployeesRequest: async () => {
+  totalEmployee: 0,
+  getAllEmployeesRequest: async (pageNo, limit) => {
     try {
-      const res = await axios.get("/api/get-all-employee");
+      const res = await axios.get(`/api/get-all-employee/${pageNo}/${limit}`);
       if (res?.data?.success === true) {
-        set({ allEmployees: res?.data?.allEmployee });
+        set({
+          allEmployees: res?.data?.allEmployee,
+        });
+        set({
+          totalEmployee: res?.data?.totalEmployee,
+        });
       } else {
         ErrorToast(res?.data?.message);
         return [];

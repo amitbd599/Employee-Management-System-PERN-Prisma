@@ -4,7 +4,6 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "img" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -14,6 +13,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Department" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Department_pkey" PRIMARY KEY ("id")
 );
@@ -22,6 +22,7 @@ CREATE TABLE "Department" (
 CREATE TABLE "Role" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
 );
@@ -31,6 +32,7 @@ CREATE TABLE "Employee" (
     "id" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
+    "img" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phone" TEXT,
     "salary" DOUBLE PRECISION NOT NULL,

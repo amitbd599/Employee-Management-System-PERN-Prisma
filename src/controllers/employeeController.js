@@ -3,8 +3,16 @@ import prisma from "../../config/db.js";
 //! create Employee
 export const createEmployee = async (req, res) => {
   try {
-    let { firstName, lastName, email, phone, salary, departmentId, roleId } =
-      req.body;
+    let {
+      firstName,
+      lastName,
+      email,
+      phone,
+      img,
+      salary,
+      departmentId,
+      roleId,
+    } = req.body;
 
     const isEmployee = await prisma.employee.findUnique({
       where: {
@@ -24,26 +32,23 @@ export const createEmployee = async (req, res) => {
         lastName,
         email,
         phone,
+        img,
         salary,
         departmentId,
         roleId,
       },
     });
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Employee created successfully",
-        employee,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Employee created successfully",
+      employee,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error creating employee",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Error creating employee",
+      error: error.toString(),
+    });
   }
 };
 
@@ -61,6 +66,7 @@ export const getAllEmployee = async (req, res) => {
         firstName: true,
         lastName: true,
         email: true,
+        img: true,
         phone: true,
         salary: true,
         createdAt: true,
@@ -69,16 +75,15 @@ export const getAllEmployee = async (req, res) => {
         createdAt: "desc",
       },
     });
+    const totalEmployee = await prisma.employee.count();
 
-    res.status(200).json({ success: true, allEmployee });
+    res.status(200).json({ success: true, allEmployee, totalEmployee });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -95,6 +100,7 @@ export const getSingleEmployee = async (req, res) => {
         lastName: true,
         email: true,
         phone: true,
+        img: true,
         salary: true,
         createdAt: true,
         department: {
@@ -112,13 +118,11 @@ export const getSingleEmployee = async (req, res) => {
 
     res.status(200).json({ success: true, employee });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -147,21 +151,27 @@ export const deleteSingleEmployee = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Employee delete successfully." });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
 //! update Single Employee
 export const updateRoleEmployee = async (req, res) => {
   try {
-    let { firstName, lastName, email, phone, salary, departmentId, roleId } =
-      req.body;
+    let {
+      firstName,
+      lastName,
+      email,
+      phone,
+      img,
+      salary,
+      departmentId,
+      roleId,
+    } = req.body;
 
     // step 1 - check employee id exists
     const isEmployeeId = await prisma.employee.findUnique({
@@ -200,6 +210,7 @@ export const updateRoleEmployee = async (req, res) => {
         lastName,
         email,
         phone,
+        img,
         salary,
         departmentId,
         roleId,
@@ -210,12 +221,10 @@ export const updateRoleEmployee = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Employee update successfully.", role });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
