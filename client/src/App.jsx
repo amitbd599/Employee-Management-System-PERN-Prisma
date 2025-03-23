@@ -40,20 +40,28 @@ function App() {
           }
         />
         {/* user */}
-        <Route exact path='/create-user' element={<CreateUserPage />} />
-        <Route exact path='/update-user/:id' element={<UpdateUserPage />} />
-        <Route exact path='/get-all-user' element={<GetUserPage />} />
+        {/* <Route exact path='/create-user' element={<CreateUserPage />} /> */}
+        {/* <Route exact path='/update-user/:id' element={<UpdateUserPage />} /> */}
+        {/* <Route exact path='/get-all-user' element={<GetUserPage />} /> */}
 
         {/* department */}
         <Route
           exact
           path='/create-department'
-          element={<CreateDepartmentPage />}
+          element={
+            <PrivateRoute>
+              <CreateDepartmentPage />
+            </PrivateRoute>
+          }
         />
         <Route
           exact
           path='/update-department/:id'
-          element={<UpdateDepartmentPage />}
+          element={
+            <PrivateRoute>
+              <UpdateDepartmentPage />
+            </PrivateRoute>
+          }
         />
         <Route
           exact

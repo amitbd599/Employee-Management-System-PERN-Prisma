@@ -78,7 +78,10 @@ const GetDepartment = () => {
                           >
                             <FaTrashCan className='text-[16px]' />
                           </button>
-                          <Link className='p-1' to={`/update-user/${item?.id}`}>
+                          <Link
+                            className='p-1'
+                            to={`/update-department/${item?.id}`}
+                          >
                             <FaRegPenToSquare className='text-[16px]' />
                           </Link>
                         </div>

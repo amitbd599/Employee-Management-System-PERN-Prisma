@@ -93,13 +93,11 @@ export const deleteSingleDepartment = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Department delete successfully." });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -116,7 +114,9 @@ export const updateSingleDepartment = async (req, res) => {
     });
 
     if (!!isDepartmentId === false) {
-      return res.status(200).json({ message: "Department not exists." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Department not exists." });
     }
 
     // step 2: check if department name already exists
@@ -127,7 +127,9 @@ export const updateSingleDepartment = async (req, res) => {
     });
 
     if (!!isDepartment === true) {
-      return res.status(409).json({ message: "Department already exists." });
+      return res
+        .status(409)
+        .json({ success: false, message: "Department already exists." });
     }
 
     // step 3: update department
@@ -143,10 +145,18 @@ export const updateSingleDepartment = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Department update successfully.", department });
+      .json({
+        success: true,
+        message: "Department update successfully.",
+        department,
+      });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
