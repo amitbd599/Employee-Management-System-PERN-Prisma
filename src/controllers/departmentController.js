@@ -60,11 +60,15 @@ export const getSingleDepartment = async (req, res) => {
       },
     });
 
-    res.status(200).json({ department });
+    res.status(200).json({ success: true, department });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 
@@ -143,20 +147,16 @@ export const updateSingleDepartment = async (req, res) => {
       },
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Department update successfully.",
-        department,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Department update successfully.",
+      department,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };

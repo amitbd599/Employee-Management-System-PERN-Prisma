@@ -59,6 +59,26 @@ const DepartmentStore = create((set) => ({
       console.log(e);
     }
   },
+
+  // update-single-department
+  updateDepartmentRequest: async (reqBody, id) => {
+    try {
+      const res = await axios.put(
+        `/api/update-single-department/${id}`,
+        reqBody
+      );
+      if (res?.data?.success === true) {
+        SuccessToast(res?.data?.message);
+        return true;
+      } else {
+        ErrorToast(res?.data?.message);
+        return false;
+      }
+    } catch (e) {
+      ErrorToast("Something went wrong!");
+      console.log(e);
+    }
+  },
 }));
 
 export default DepartmentStore;
