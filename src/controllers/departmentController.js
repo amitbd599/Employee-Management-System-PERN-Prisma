@@ -41,11 +41,13 @@ export const getAllDepartment = async (req, res) => {
   try {
     const allDepartment = await prisma.department.findMany({});
 
-    res.status(200).json({ allDepartment });
+    res.status(200).json({ success: true, allDepartment });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -76,7 +78,9 @@ export const deleteSingleDepartment = async (req, res) => {
     });
 
     if (!!isDepartment === false) {
-      return res.status(200).json({ message: "Department not exists." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Department not exists." });
     }
 
     await prisma.department.delete({
@@ -85,11 +89,17 @@ export const deleteSingleDepartment = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Department delete successfully." });
+    res
+      .status(200)
+      .json({ success: true, message: "Department delete successfully." });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 

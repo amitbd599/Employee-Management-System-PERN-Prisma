@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SubmitButton from "./SubmitButton";
 
 const CreateDepartment = () => {
-  let { createDepartment, loadingRequest } = DepartmentStore();
+  let { createDepartmentRequest, loadingRequest } = DepartmentStore();
   let navigate = useNavigate();
 
   let { nameRef } = useRef();
@@ -17,7 +17,7 @@ const CreateDepartment = () => {
       ErrorToast("Name is required. ");
       return;
     } else {
-      let res = await createDepartment({ name });
+      let res = await createDepartmentRequest({ name });
       if (res) {
         navigate("/get-all-department");
       }
