@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useRef } from "react";
+import DepartmentStore from "../../store/DepartmentStore";
+import { ErrorToast, IsEmpty } from "../helper/helper";
+import { useNavigate } from "react-router-dom";
+import SubmitButton from "./SubmitButton";
 
 const CreateDepartment = () => {
+  let { createDepartment, loadingRequest } = DepartmentStore();
+  let navigate = useNavigate();
+
+  let { nameRef } = useRef();
+
+  let submitCreateDepartment = async () => {
+    let name = nameRef.value;
+
+    if (IsEmpty(name)) {
+      ErrorToast("Name is required. ");
+      return;
+    } else {
+      let res = await createDepartment({ name });
+      if (res) {
+        navigate("/get-all-department");
+      }
+    }
+  };
+
   return (
     <section>
       <>
@@ -10,13 +33,14 @@ const CreateDepartment = () => {
             Create a new department
           </h1>
 
-          <form>
+          <div>
             <div className='flex gap-[20px] mb-4'>
               <div className='w-full grid gap-1'>
                 <label htmlFor='Name' className='text-gray-600'>
                   Name:
                 </label>
                 <input
+                  ref={(input) => (nameRef = input)}
                   id='Name'
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
@@ -24,13 +48,13 @@ const CreateDepartment = () => {
               </div>
             </div>
 
-            <button
-              type='button'
-              className='px-[26px] py-[12px] rounded bg-[#487FFF] text-white hover:bg-blue-600 focus:outline-none transition'
-            >
-              Create Department
-            </button>
-          </form>
+            <SubmitButton
+              text='Create new department'
+              type='submit'
+              submitFun={submitCreateDepartment}
+              isSubmitting={loadingRequest}
+            />
+          </div>
         </div>
       </>
     </section>

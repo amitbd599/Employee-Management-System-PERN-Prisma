@@ -12,7 +12,9 @@ export const createDepartment = async (req, res) => {
     });
 
     if (!!isDepartment === true) {
-      return res.status(409).json({ message: "Department already exists" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Department already exists" });
     }
 
     let department = await prisma.department.create({
@@ -20,13 +22,17 @@ export const createDepartment = async (req, res) => {
         name,
       },
     });
-    res
-      .status(201)
-      .json({ message: "Department created successfully", department });
+    res.status(201).json({
+      success: true,
+      message: "Department created successfully",
+      department,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating department", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Error creating department",
+      error: error.toString(),
+    });
   }
 };
 
