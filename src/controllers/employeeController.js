@@ -70,6 +70,16 @@ export const getAllEmployee = async (req, res) => {
         phone: true,
         salary: true,
         createdAt: true,
+        department: {
+          select: {
+            name: true,
+          },
+        },
+        role: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",

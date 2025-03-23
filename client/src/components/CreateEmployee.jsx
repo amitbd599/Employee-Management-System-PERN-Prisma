@@ -12,6 +12,12 @@ import { FaTrashCan } from "react-icons/fa6";
 const CreateEmployee = () => {
   let { createEmployeeRequest, loadingRequest } = EmployeeStore();
   let { getAllDepartmentsRequest, allDepartments } = DepartmentStore();
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState(null);
+  const [selectImage, setSelectImage] = useState("");
+  const [file, setFile] = useState(null);
+  let { getAllFileRequest, files, uploadFileRequest, deleteFileRequest } =
+    FileStore();
   let { getAllRolesRequest, allRoles } = RoleStore();
   let navigate = useNavigate();
   let [data, setData] = useState({
@@ -34,6 +40,7 @@ const CreateEmployee = () => {
   let submitCreateEmployee = async () => {
     let { firstName, lastName, email, phone, salary, departmentId, roleId } =
       data;
+    let img = selectImage;
     if (IsEmpty(firstName)) {
       ErrorToast("First Name is required. ");
       return;
@@ -42,6 +49,9 @@ const CreateEmployee = () => {
       return;
     } else if (IsEmpty(email)) {
       ErrorToast("Email is required. ");
+      return;
+    } else if (IsEmpty(img)) {
+      ErrorToast("Image is required. ");
       return;
     } else if (IsEmpty(phone)) {
       ErrorToast("Phone is required. ");
@@ -61,6 +71,7 @@ const CreateEmployee = () => {
         lastName,
         email,
         phone,
+        img,
         salary: parseFloat(salary),
         departmentId,
         roleId,
@@ -71,12 +82,6 @@ const CreateEmployee = () => {
     }
   };
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [image, setImage] = useState(null);
-  const [selectImage, setSelectImage] = useState("");
-  const [file, setFile] = useState(null);
-  let { getAllFileRequest, files, uploadFileRequest, deleteFileRequest } =
-    FileStore();
   let openModal = async () => {
     setIsOpen(true);
     await getAllFileRequest();
