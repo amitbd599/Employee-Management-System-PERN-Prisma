@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import RoleStore from "../../store/RoleStore";
+import { useNavigate } from "react-router-dom";
+import { ErrorToast, IsEmpty } from "../helper/helper";
+import SubmitButton from "./SubmitButton";
 
 const CreateRole = () => {
+  let { createRoleRequest, loadingRequest } = RoleStore();
+  let navigate = useNavigate();
+
+  let [name, setName] = useState("");
+
+  let submitCreateDepartment = async () => {
+    if (IsEmpty(name)) {
+      ErrorToast("Name is required. ");
+      return;
+    } else {
+      let res = await createRoleRequest({ name });
+      if (res) {
+        navigate("/get-all-role");
+      }
+    }
+  };
+
   return (
     <section>
       <>
@@ -17,19 +38,20 @@ const CreateRole = () => {
                   Name:
                 </label>
                 <input
-                  id='Name'
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
                 />
               </div>
             </div>
 
-            <button
-              type='button'
-              className='px-[26px] py-[12px] rounded bg-[#487FFF] text-white hover:bg-blue-600 focus:outline-none transition'
-            >
-              Create Role
-            </button>
+            <SubmitButton
+              text='Create new role'
+              type='submit'
+              submitFun={submitCreateDepartment}
+              isSubmitting={loadingRequest}
+            />
           </form>
         </div>
       </>
