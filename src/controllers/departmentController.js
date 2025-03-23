@@ -62,13 +62,11 @@ export const getSingleDepartment = async (req, res) => {
 
     res.status(200).json({ success: true, department });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong!",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -132,7 +130,7 @@ export const updateSingleDepartment = async (req, res) => {
 
     if (!!isDepartment === true) {
       return res
-        .status(409)
+        .status(200)
         .json({ success: false, message: "Department already exists." });
     }
 

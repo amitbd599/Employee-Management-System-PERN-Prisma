@@ -1,24 +1,38 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import DepartmentStore from "../../store/DepartmentStore";
 import { useNavigate, useParams } from "react-router-dom";
+import { ErrorToast, IsEmpty } from "../helper/helper";
+import SubmitButton from "./SubmitButton";
 
 const UpdateDepartment = () => {
+  let [name, setName] = useState("");
   let {
     updateDepartmentRequest,
     getSingleDepartmentRequest,
     singleDepartment,
+    loadingRequest,
   } = DepartmentStore();
   let navigate = useNavigate();
-  let { nameRef } = useRef();
   let { id } = useParams();
 
   useEffect(() => {
     (async () => {
       await getSingleDepartmentRequest(id);
+      setName(singleDepartment?.name);
     })();
-  }, [getSingleDepartmentRequest, id]);
+  }, [getSingleDepartmentRequest, id, singleDepartment?.name]);
 
-  console.log(singleDepartment);
+  let submitUpdateDepartment = async () => {
+    if (IsEmpty(name)) {
+      ErrorToast("Name is required. ");
+      return;
+    } else {
+      let res = await updateDepartmentRequest(id, { name });
+      if (res) {
+        navigate("/get-all-department");
+      }
+    }
+  };
 
   return (
     <section>
@@ -36,21 +50,20 @@ const UpdateDepartment = () => {
                   Name:
                 </label>
                 <input
-                  ref={(input) => (nameRef = input)}
-                  defaultValue={singleDepartment?.name}
-                  id='Name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
                 />
               </div>
             </div>
 
-            <button
-              type='button'
-              className='px-[26px] py-[12px] rounded bg-[#487FFF] text-white hover:bg-blue-600 focus:outline-none transition'
-            >
-              Update Department
-            </button>
+            <SubmitButton
+              text='Update department'
+              type='submit'
+              submitFun={submitUpdateDepartment}
+              isSubmitting={loadingRequest}
+            />
           </form>
         </div>
       </>

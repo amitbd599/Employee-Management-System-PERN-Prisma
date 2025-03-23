@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import DepartmentStore from "../../store/DepartmentStore";
 import { ErrorToast, IsEmpty } from "../helper/helper";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +8,9 @@ const CreateDepartment = () => {
   let { createDepartmentRequest, loadingRequest } = DepartmentStore();
   let navigate = useNavigate();
 
-  let { nameRef } = useRef();
+  let [name, setName] = useState("");
 
   let submitCreateDepartment = async () => {
-    let name = nameRef.value;
-
     if (IsEmpty(name)) {
       ErrorToast("Name is required. ");
       return;
@@ -40,7 +38,8 @@ const CreateDepartment = () => {
                   Name:
                 </label>
                 <input
-                  ref={(input) => (nameRef = input)}
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
                   id='Name'
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'

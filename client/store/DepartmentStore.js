@@ -77,7 +77,7 @@ const DepartmentStore = create((set) => ({
   },
 
   // update-single-department
-  updateDepartmentRequest: async (reqBody, id) => {
+  updateDepartmentRequest: async (id, reqBody) => {
     try {
       set({ loadingRequest: true });
       const res = await axios.put(
