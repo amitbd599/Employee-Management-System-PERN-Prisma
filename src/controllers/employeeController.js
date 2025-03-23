@@ -13,7 +13,9 @@ export const createEmployee = async (req, res) => {
     });
 
     if (!!isEmployee === true) {
-      return res.status(409).json({ message: "Employee already exists" });
+      return res
+        .status(409)
+        .json({ success: false, message: "Employee already exists" });
     }
 
     let employee = await prisma.employee.create({
@@ -29,11 +31,19 @@ export const createEmployee = async (req, res) => {
     });
     res
       .status(201)
-      .json({ message: "Employee created successfully", employee });
+      .json({
+        success: true,
+        message: "Employee created successfully",
+        employee,
+      });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error creating employee", error: error.toString() });
+      .json({
+        success: false,
+        message: "Error creating employee",
+        error: error.toString(),
+      });
   }
 };
 
@@ -60,11 +70,15 @@ export const getAllEmployee = async (req, res) => {
       },
     });
 
-    res.status(200).json({ allEmployee });
+    res.status(200).json({ success: true, allEmployee });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 
@@ -96,11 +110,15 @@ export const getSingleEmployee = async (req, res) => {
       },
     });
 
-    res.status(200).json({ employee });
+    res.status(200).json({ success: true, employee });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 
@@ -114,7 +132,9 @@ export const deleteSingleEmployee = async (req, res) => {
     });
 
     if (!!isEmployee === false) {
-      return res.status(200).json({ message: "Employee not exists." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Employee not exists." });
     }
 
     await prisma.employee.delete({
@@ -123,11 +143,17 @@ export const deleteSingleEmployee = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Employee delete successfully." });
+    res
+      .status(200)
+      .json({ success: true, message: "Employee delete successfully." });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
 
@@ -145,7 +171,9 @@ export const updateRoleEmployee = async (req, res) => {
     });
 
     if (!!isEmployeeId === false) {
-      return res.status(200).json({ message: "Employee not found." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Employee not found." });
     }
 
     // step 2 - check if employee name exists
@@ -156,7 +184,9 @@ export const updateRoleEmployee = async (req, res) => {
     });
 
     if (!!isEmployee === true) {
-      return res.status(409).json({ message: "Employee already exists" });
+      return res
+        .status(409)
+        .json({ success: false, message: "Employee already exists" });
     }
 
     // step 3 - update role
@@ -176,10 +206,16 @@ export const updateRoleEmployee = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Employee update successfully.", role });
+    res
+      .status(200)
+      .json({ success: true, message: "Employee update successfully.", role });
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .json({
+        success: false,
+        message: "Something went wrong!",
+        error: error.toString(),
+      });
   }
 };
