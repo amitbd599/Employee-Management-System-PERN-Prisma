@@ -37,7 +37,11 @@ export const createRole = async (req, res) => {
 //! get All Role
 export const getAllRole = async (req, res) => {
   try {
-    const allRole = await prisma.role.findMany({});
+    const allRole = await prisma.role.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
 
     res.status(200).json({ success: true, allRole });
   } catch (error) {

@@ -66,11 +66,31 @@ function App() {
         <Route
           exact
           path='/get-all-department'
-          element={<GetDepartmentPage />}
+          element={
+            <PrivateRoute>
+              <GetDepartmentPage />
+            </PrivateRoute>
+          }
         />
         {/* role */}
-        <Route exact path='/create-role' element={<CreateRolePage />} />
-        <Route exact path='/get-all-role' element={<GetRolePage />} />
+        <Route
+          exact
+          path='/create-role'
+          element={
+            <PrivateRoute>
+              <CreateRolePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path='/get-all-role'
+          element={
+            <PrivateRoute>
+              <GetRolePage />
+            </PrivateRoute>
+          }
+        />
         <Route exact path='/update-role/:id' element={<UpdateRolePage />} />
 
         {/* employee */}

@@ -21,12 +21,14 @@ model Department {
   id        String  @id @default(uuid())
   name      String  @unique
   employees Employee[]
+   createdAt DateTime @default(now())
 }
 
 model Role {
   id        String  @id @default(uuid())
   name      String  @unique
   employees Employee[]
+   createdAt DateTime @default(now())
 }
 
 model Employee {

@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import RoleStore from "../../store/RoleStore";
+import { ErrorToast, IsEmpty } from "../helper/helper";
+import SubmitButton from "./SubmitButton";
 
 const UpdateRole = () => {
+  let [name, setName] = useState("");
+  let { updateRoleRequest, getSingleRoleRequest, singleRole, loadingRequest } =
+    RoleStore();
+  let navigate = useNavigate();
+  let { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      await getSingleRoleRequest(id);
+      setName(singleRole?.name);
+    })();
+  }, [getSingleRoleRequest, id, singleRole?.name]);
+
+  let submitUpdateRole = async () => {
+    if (IsEmpty(name)) {
+      ErrorToast("Name is required. ");
+      return;
+    } else {
+      let res = await updateRoleRequest(id, { name });
+      if (res) {
+        navigate("/get-all-role");
+      }
+    }
+  };
   return (
     <section>
       <>
@@ -17,19 +45,20 @@ const UpdateRole = () => {
                   Name:
                 </label>
                 <input
-                  id='Name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   type='text'
                   className='border p-2 rounded w-full h-[40px] focus:outline-none text-gray-600'
                 />
               </div>
             </div>
 
-            <button
-              type='button'
-              className='px-[26px] py-[12px] rounded bg-[#487FFF] text-white hover:bg-blue-600 focus:outline-none transition'
-            >
-              Update Role
-            </button>
+            <SubmitButton
+              text='Update role'
+              type='submit'
+              submitFun={submitUpdateRole}
+              isSubmitting={loadingRequest}
+            />
           </form>
         </div>
       </>
