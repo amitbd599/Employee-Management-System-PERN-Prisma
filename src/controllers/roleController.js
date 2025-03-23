@@ -12,7 +12,9 @@ export const createRole = async (req, res) => {
     });
 
     if (!!isRole === true) {
-      return res.status(409).json({ message: "Role already exists" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Role already exists" });
     }
 
     let role = await prisma.role.create({
@@ -20,11 +22,15 @@ export const createRole = async (req, res) => {
         name,
       },
     });
-    res.status(201).json({ message: "Role created successfully", role });
-  } catch (error) {
     res
-      .status(500)
-      .json({ message: "Error creating role", error: error.toString() });
+      .status(201)
+      .json({ success: true, message: "Role created successfully", role });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error creating role",
+      error: error.toString(),
+    });
   }
 };
 
@@ -33,11 +39,13 @@ export const getAllRole = async (req, res) => {
   try {
     const allRole = await prisma.role.findMany({});
 
-    res.status(200).json({ allRole });
+    res.status(200).json({ success: true, allRole });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -50,11 +58,13 @@ export const getSingleRole = async (req, res) => {
       },
     });
 
-    res.status(200).json({ role });
+    res.status(200).json({ success: true, role });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -68,7 +78,9 @@ export const deleteSingleRole = async (req, res) => {
     });
 
     if (!!isRole === false) {
-      return res.status(200).json({ message: "Role not exists." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Role not exists." });
     }
 
     await prisma.role.delete({
@@ -77,11 +89,15 @@ export const deleteSingleRole = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Role delete successfully." });
-  } catch (error) {
     res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .status(200)
+      .json({ success: true, message: "Role delete successfully." });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
 
@@ -98,7 +114,9 @@ export const updateRoleDepartment = async (req, res) => {
     });
 
     if (!!isRoleId === false) {
-      return res.status(200).json({ message: "Role not found." });
+      return res
+        .status(200)
+        .json({ success: false, message: "Role not found." });
     }
 
     // step 2 - check if role name exists
@@ -109,7 +127,9 @@ export const updateRoleDepartment = async (req, res) => {
     });
 
     if (!!isRole === true) {
-      return res.status(409).json({ message: "Role already exists" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Role already exists" });
     }
 
     // step 3 - update role
@@ -123,10 +143,14 @@ export const updateRoleDepartment = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Role update successfully.", role });
-  } catch (error) {
     res
-      .status(500)
-      .json({ message: "Something went wrong!", error: error.toString() });
+      .status(200)
+      .json({ success: true, message: "Role update successfully.", role });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error: error.toString(),
+    });
   }
 };
