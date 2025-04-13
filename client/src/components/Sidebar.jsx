@@ -38,33 +38,7 @@ export function Sidebar() {
                 </li>
               </ul>
             </li>
-            <li>
-              <Link to='#' className='nav'>
-                User <FaAngleDown />
-              </Link>
-              <ul className='pl-[20px] py-2 grid gap-2'>
-                <li>
-                  <NavLink
-                    to='/create-user'
-                    className={(navData) =>
-                      navData.isActive ? "nav__item_active" : "nav__item"
-                    }
-                  >
-                    Create User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to='/get-all-user'
-                    className={(navData) =>
-                      navData.isActive ? "nav__item_active" : "nav__item"
-                    }
-                  >
-                    Get All User
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
+
             <li>
               <Link to='#' className='nav'>
                 Department <FaAngleDown />

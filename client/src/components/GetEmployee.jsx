@@ -74,7 +74,7 @@ const GetEmployee = () => {
               ) : (
                 <>
                   {allEmployees?.map((item, index) => (
-                    <tr className='hover:bg-gray-50'>
+                    <tr key={index} className='hover:bg-gray-50'>
                       <th className='flex gap-3 px-6 py-4 font-normal text-gray-900'>
                         <div className='relative h-10 w-10'>
                           <img
@@ -121,7 +121,10 @@ const GetEmployee = () => {
                           >
                             <FaTrashCan className='text-[16px]' />
                           </button>
-                          <Link className='p-1' to={`/update-role/${item?.id}`}>
+                          <Link
+                            className='p-1'
+                            to={`/update-employee/${item?.id}`}
+                          >
                             <FaRegPenToSquare className='text-[16px]' />
                           </Link>
                         </div>
@@ -132,19 +135,18 @@ const GetEmployee = () => {
               )}
             </tbody>
           </table>
-          <div className='d-flex align-items-center justify-content-between flex-wrap gap-2 mt-24'>
-            <span>Showing 1 to 10 of {totalEmployee} entries</span>
+          <div className='flex align-items-center justify-center flex-wrap gap-2 mt-[20px]'>
             {totalEmployee > 10 ? (
               <div>
                 <ReactPaginate
-                  className='pagination d-flex flex-wrap align-items-center gap-2 justify-content-center'
+                  className='pagination flex  gap-3 mt-3'
                   previousLabel='<'
                   nextLabel='>'
                   pageClassName='page-item'
+                  pageLinkClassName=' page-item'
+                  previousLinkClassName='page-item'
+                  nextLinkClassName='page-item'
                   activeClassName='active'
-                  pageLinkClassName=' page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px  text-md'
-                  previousLinkClassName='page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px  text-md'
-                  nextLinkClassName='text-secondary-light'
                   activeLinkClassName=' active-link'
                   breakLabel='...'
                   pageCount={totalEmployee / 10}

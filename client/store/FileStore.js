@@ -6,7 +6,7 @@ const FileStore = create((set) => ({
   files: null,
   getAllFileRequest: async () => {
     try {
-      let res = await axios.get("api/get-all-file");
+      let res = await axios.get("/api/get-all-file");
       if (res?.data?.success === true) {
         set({ files: res?.data?.files });
       } else {
@@ -24,7 +24,7 @@ const FileStore = create((set) => ({
     try {
       let formData = new FormData();
       formData.append("file", file);
-      let res = await axios.post("api/file-upload", formData);
+      let res = await axios.post("/api/file-upload", formData);
       if (res?.data?.success === true) {
         SuccessToast(res?.data?.message);
         return true;
@@ -41,7 +41,7 @@ const FileStore = create((set) => ({
 
   deleteFileRequest: async (id) => {
     try {
-      let res = await axios.delete(`api/delete-file/${id}`);
+      let res = await axios.delete(`/api/delete-file/${id}`);
       if (res?.data?.success === true) {
         SuccessToast(res?.data?.message);
         return true;

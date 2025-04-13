@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import CreateUserPage from "./pages/CreateUserPage";
-import UpdateUserPage from "./pages/UpdateUserPage";
-import GetUserPage from "./pages/GetUserPage";
 import CreateDepartmentPage from "./pages/CreateDepartmentPage";
 import UpdateDepartmentPage from "./pages/UpdateDepartmentPage";
 import GetDepartmentPage from "./pages/GetDepartmentPage";
@@ -15,6 +12,7 @@ import GetGalleryFilePage from "./pages/GetGalleryFilePage";
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
+import UpdateEmployeePage from "./pages/UpdateEmployeePage";
 
 function App() {
   return (
@@ -39,10 +37,6 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* user */}
-        {/* <Route exact path='/create-user' element={<CreateUserPage />} /> */}
-        {/* <Route exact path='/update-user/:id' element={<UpdateUserPage />} /> */}
-        {/* <Route exact path='/get-all-user' element={<GetUserPage />} /> */}
 
         {/* department */}
         <Route
@@ -97,8 +91,13 @@ function App() {
         <Route exact path='/create-employee' element={<CreateEmployeePage />} />
         <Route
           exact
-          path='/get-all-employee/:id'
+          path='/get-all-employee/:pageNo'
           element={<GetEmployeePage />}
+        />
+        <Route
+          exact
+          path='/update-employee/:id'
+          element={<UpdateEmployeePage />}
         />
 
         {/* gallery */}

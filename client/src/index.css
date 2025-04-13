@@ -24,6 +24,14 @@
   .nav__item_active {
     @apply font-medium rounded-s-lg  block border-b px-[20px] py-[10px] pl-[20px] mr-2 bg-[#487FFF] text-white transition-all duration-300;
   }
+
+  .active-link {
+    @apply font-medium rounded-md    w-[40px] h-[40px] flex justify-center items-center !bg-[#487FFF] !text-white  transition-all duration-300;
+  }
+
+  .page-item {
+    @apply font-medium rounded-md text-gray-900   w-[40px] h-[40px] flex justify-center items-center bg-[#E4F1FF] hover:bg-[#487FFF] hover:text-white transition-all duration-300;
+  }
 }
 
 .ReactModal__Overlay--after-open {

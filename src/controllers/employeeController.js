@@ -115,11 +115,13 @@ export const getSingleEmployee = async (req, res) => {
         createdAt: true,
         department: {
           select: {
+            id: true,
             name: true,
           },
         },
         role: {
           select: {
+            id: true,
             name: true,
           },
         },
@@ -196,18 +198,18 @@ export const updateRoleEmployee = async (req, res) => {
         .json({ success: false, message: "Employee not found." });
     }
 
-    // step 2 - check if employee name exists
-    const isEmployee = await prisma.employee.findUnique({
-      where: {
-        email,
-      },
-    });
+    // // step 2 - check if employee name exists
+    // const isEmployee = await prisma.employee.findUnique({
+    //   where: {
+    //     email,
+    //   },
+    // });
 
-    if (!!isEmployee === true) {
-      return res
-        .status(409)
-        .json({ success: false, message: "Employee already exists" });
-    }
+    // if (!!isEmployee === true) {
+    //   return res
+    //     .status(409)
+    //     .json({ success: false, message: "Employee already exists" });
+    // }
 
     // step 3 - update role
     const role = await prisma.employee.update({
