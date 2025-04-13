@@ -44,6 +44,20 @@ model Employee {
   role        Role @relation(fields: [roleId], references: [id])
   roleId      String
   createdAt   DateTime @default(now())
+   salaries    Salary[]
+}
+
+model Salary {
+  id          String    @id @default(uuid())
+  employee    Employee  @relation(fields: [employeeId], references: [id])
+  employeeId  String
+  amount      Float
+  month       Int
+  year        Int
+  paidAt      DateTime  @default(now())
+  status      String    @default("paid")
+  remarks     String?
+  createdAt   DateTime  @default(now())
 }
 
 model File {

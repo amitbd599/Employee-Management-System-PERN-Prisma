@@ -38,6 +38,11 @@ import {
   fileUpload,
   getAllFile,
 } from "../controllers/fileUploadController.js";
+import {
+  createSalary,
+  getEmployeeSalaryHistory,
+  getSalaryReport,
+} from "../controllers/salaryController.js";
 
 const router = express.Router();
 
@@ -71,6 +76,11 @@ router.get("/get-all-employee/:limit/:pageNo", getAllEmployee);
 router.get("/get-single-employee/:id", getSingleEmployee);
 router.delete("/delete-single-employee/:id", deleteSingleEmployee);
 router.put("/update-single-employee/:id", updateRoleEmployee);
+
+// employee routes
+router.post("/create-salary", createSalary);
+router.get("/salary-report", getSalaryReport);
+router.get("/salary-history/:employeeId", getEmployeeSalaryHistory);
 
 // file routes
 router.post(
