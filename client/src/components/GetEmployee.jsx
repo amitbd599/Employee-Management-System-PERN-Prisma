@@ -2,11 +2,16 @@ import React, { useEffect } from "react";
 import EmployeeStore from "../../store/EmployeeStore";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { formatDate } from "../helper/helper";
+import { DeleteAlert, formatDate } from "../helper/helper";
 import { FaRegPenToSquare, FaTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 const GetEmployee = () => {
-  let { getAllEmployeesRequest, allEmployees, totalEmployee } = EmployeeStore();
+  let {
+    getAllEmployeesRequest,
+    allEmployees,
+    totalEmployee,
+    deleteEmployeeRequest,
+  } = EmployeeStore();
   let navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
@@ -16,13 +21,23 @@ const GetEmployee = () => {
   }, [getAllEmployeesRequest]);
 
   //! handelPageClick
-  const handelPageClick = (event) => {
+  const handelPageClick = async (event) => {
     let pageNo = event.selected;
-    getAllEmployeesRequest(10, pageNo + 1);
+    await getAllEmployeesRequest(10, pageNo + 1);
     navigate(`/get-all-employee/${pageNo + 1}`);
   };
 
-  console.log(totalEmployee);
+  //! delete employee
+  let deleteEmployee = async (id) => {
+    let isConfirmed = await DeleteAlert();
+
+    if (isConfirmed) {
+      let result = await deleteEmployeeRequest(id);
+      if (result) {
+        await getAllEmployeesRequest(10, params.pageNo);
+      }
+    }
+  };
 
   return (
     <div>
@@ -117,7 +132,7 @@ const GetEmployee = () => {
                         <div className='flex justify-end gap-4'>
                           <button
                             className='p-1'
-                            //  onClick={() => deleteRole(item?.id)}
+                            onClick={() => deleteEmployee(item?.id)}
                           >
                             <FaTrashCan className='text-[16px]' />
                           </button>

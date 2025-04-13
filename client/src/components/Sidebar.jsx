@@ -1,6 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa6";
 export function Sidebar() {
+  let location = useLocation();
+
+  console.log(location.pathname);
+
   return (
     <section className='w-[260px] border-r border-gray-300  h-screen fixed z-[0] bg-white overflow-auto scrollbar-hidden'>
       <div className=''>
@@ -110,9 +114,12 @@ export function Sidebar() {
                 </li>
                 <li>
                   <NavLink
-                    to='/get-all-employee/1'
-                    className={(navData) =>
-                      navData.isActive ? "nav__item_active" : "nav__item"
+                    to='/get-all-employee/2'
+                    className={
+                      location.pathname.split("/").slice(0, 2).join("/") ===
+                      "/get-all-employee"
+                        ? "nav__item_active"
+                        : "nav__item"
                     }
                   >
                     Get All Employee
