@@ -114,7 +114,7 @@ export function Sidebar() {
                 </li>
                 <li>
                   <NavLink
-                    to='/get-all-employee/2'
+                    to='/get-all-employee/1'
                     className={
                       location.pathname.split("/").slice(0, 2).join("/") ===
                       "/get-all-employee"
