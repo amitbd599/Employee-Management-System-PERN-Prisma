@@ -30,6 +30,7 @@ export function Sidebar() {
                     Dashboard
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
                     to='/profile'
@@ -43,6 +44,43 @@ export function Sidebar() {
               </ul>
             </li>
 
+            <li>
+              <Link to='#' className='nav'>
+                Salary <FaAngleDown />
+              </Link>
+              <ul className='pl-[20px] py-2 grid gap-2'>
+                <li>
+                  <NavLink
+                    to='/create-salary'
+                    className={(navData) =>
+                      navData.isActive ? "nav__item_active" : "nav__item"
+                    }
+                  >
+                    Create Salary
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to='/salary-report'
+                    className={(navData) =>
+                      navData.isActive ? "nav__item_active" : "nav__item"
+                    }
+                  >
+                    Get Salary Report
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to='/salary-history'
+                    className={(navData) =>
+                      navData.isActive ? "nav__item_active" : "nav__item"
+                    }
+                  >
+                    Get Salary History
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
             <li>
               <Link to='#' className='nav'>
                 Department <FaAngleDown />

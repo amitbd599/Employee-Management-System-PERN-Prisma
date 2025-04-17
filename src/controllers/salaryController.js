@@ -56,6 +56,8 @@ export const getSalaryReport = async (req, res) => {
 
     const endOfMonth = new Date(year, month, 0); // Last day of the month
 
+    console.log("End of Month:", endOfMonth);
+
     // Get all employees who joined before or during the given month
     const employees = await prisma.employee.findMany({
       where: {

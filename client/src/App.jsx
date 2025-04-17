@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
 import UpdateEmployeePage from "./pages/UpdateEmployeePage";
+import CreateSalaryPage from "./pages/CreateSalaryPage";
 
 function App() {
   return (
@@ -99,6 +100,9 @@ function App() {
           path='/update-employee/:id'
           element={<UpdateEmployeePage />}
         />
+
+        {/* salary */}
+        <Route exact path='/create-salary' element={<CreateSalaryPage />} />
 
         {/* gallery */}
         <Route

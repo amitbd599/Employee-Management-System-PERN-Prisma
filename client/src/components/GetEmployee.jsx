@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import EmployeeStore from "../../store/EmployeeStore";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { DeleteAlert, formatDate } from "../helper/helper";
+import { DeleteAlert } from "../helper/helper";
 import { FaRegPenToSquare, FaTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 const GetEmployee = () => {
@@ -55,9 +55,6 @@ const GetEmployee = () => {
                 </th>
 
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
-                  Phone
-                </th>
-                <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Salary
                 </th>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
@@ -65,6 +62,12 @@ const GetEmployee = () => {
                 </th>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Role
+                </th>
+                <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
+                  View Employee
+                </th>
+                <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
+                  View Report
                 </th>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Activity
@@ -106,7 +109,7 @@ const GetEmployee = () => {
                           <div className='text-gray-400'>{item?.email}</div>
                         </div>
                       </th>
-                      <td className='px-6 py-4'>{item?.phone}</td>
+
                       <td className='px-6 py-4'>
                         <strong className='text-[18px] text-gray-800'>
                           {item?.salary}
@@ -120,6 +123,16 @@ const GetEmployee = () => {
                       <td className='px-6 py-4'>
                         <span className='inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600'>
                           {item?.role?.name}
+                        </span>
+                      </td>
+                      <td className='px-6 py-4'>
+                        <span className='inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600'>
+                          Running
+                        </span>
+                      </td>
+                      <td className='px-6 py-4'>
+                        <span className='inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600'>
+                          Running
                         </span>
                       </td>
                       <td className='px-6 py-4'>
