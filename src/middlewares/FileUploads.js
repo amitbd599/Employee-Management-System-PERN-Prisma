@@ -14,7 +14,7 @@ const fileStorageEngine = multer.diskStorage({
 // Set file size limits and file filter
 export const uploadFile = multer({
   storage: fileStorageEngine,
-  limits: { fileSize: 1000 * 1024 },
+  limits: { fileSize: 5000 * 1024 },
   fileFilter: (req, file, cb) => {
     cb(null, true);
   },
